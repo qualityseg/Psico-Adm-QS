@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6a8486e7.css",
-    "main.js": "/static/js/main.7fa743be.js",
+    "main.css": "/static/css/main.c3991a1b.css",
+    "main.js": "/static/js/main.f82d1e09.js",
     "static/media/background-3.png": "/static/media/background-3.08860f82e291f335b8c7.png",
     "static/media/background-1.png": "/static/media/background-1.64252eff405f189da628.png",
     "static/media/background-2.png": "/static/media/background-2.103381271d74f5de8f47.png",
@@ -9,7 +9,7 @@
     "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.991c1c761fc31f9c3252.svg",
     "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.6606667d9800a27eb8b5.eot",
     "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.915a0b79c22a1c1f64da.ttf",
-    "static/media/nucleo-icons.svg": "/static/media/nucleo-icons.e8827b8a8e3df089befd.svg",
+    "static/media/nucleo-icons.svg": "/static/media/nucleo-icons.6ff448a36d590360ffd6.svg",
     "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.f3187c7462849ed261a8.svg",
     "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.98f20b9ec79b2fee02a3.eot",
     "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.330e879afe4a0abb35f2.ttf",
@@ -23,6 +23,8 @@
     "static/media/nucleo-icons.eot": "/static/media/nucleo-icons.541f8898b990ff017268.eot",
     "static/media/nucleo-icons.ttf": "/static/media/nucleo-icons.a30d0b0201482fcfffd3.ttf",
     "static/media/search.png": "/static/media/search.cb4d0eeefc5a33b96ad9.png",
+    "static/media/icone.png": "/static/media/icone.6f03763624de3ba9794d.png",
+    "static/media/reactlogo.png": "/static/media/reactlogo.f83df6fd195271621029.png",
     "static/media/fa-regular-400.woff": "/static/media/fa-regular-400.ea5a41ec4a24ce93298e.woff",
     "static/media/nucleo-icons.woff": "/static/media/nucleo-icons.141e0c4652975b501bab.woff",
     "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.2c154b0f8c0d8d166162.woff2",
@@ -31,7 +33,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.6a8486e7.css",
-    "static/js/main.7fa743be.js"
+    "static/css/main.c3991a1b.css",
+    "static/js/main.f82d1e09.js"
   ]
 }
