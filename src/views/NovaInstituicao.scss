@@ -1,0 +1,46 @@
+.container {
+    padding: 20px;
+  
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+  
+      label {
+        font-weight: bold;
+      }
+  
+      .form-control {
+        border-radius: 5px;
+      }
+    }
+  
+    .card {
+      margin-bottom: 20px;
+      border-radius: 5px;
+  
+      .card-header {
+        font-size: 20px;
+        background-color: #f8f9fa;
+        font-weight: bold;
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  
+    button {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+@media (max-width: 767px) {
+.form-check {
+    padding-left: 15px;
+}
+}
+.checkbox-container {
+    overflow: auto;
+  }
+  

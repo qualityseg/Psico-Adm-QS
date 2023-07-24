@@ -1,132 +1,88 @@
-
 import Dashboard from "views/Dashboard.js";
-import Treinamentos from "views/Treinamentos.js";
-import TableList from "views/TableList.js";
-import Maps from "views/Maps.js";
-import Grafico from "views/Grafico.js";
-import Certificados from "views/Certificados.js";
-import Catalogo from "views/Catalogo.js";
-import Resultados from "views/Resultados.js";
-import Compras from "views/Compras.js";
-import BaseConhecimento from "views/BaseConhecimento.js";
-import NRs from "views/NR.js";
-import NR2 from "views/NR2.js";
-import NR3 from "views/NR3.js";
+import NRs from "views/NovoUsuario.js";
+import NR2 from "views/GerenciamentoUsuario.js";
+import NR3 from "views/Usuarios.js";
+import NR4 from "views/NovaInstituicao.js";
+import NR5 from "views/TodosProgramas.js";
 
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Quality Seg Soluções",
+    name: "LifeMed",
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
     layout: "/admin",
     roles: ['Financeiro', 'Administrador', 'Visualizador']
   },
-
   {
-    path: "/Graficos",
-    name: "Graficos Power BI",
-    icon: "nc-icon nc-chart-bar-32",
-    component: Grafico,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador']
-  },
-  {
-    path: "/Resultados",
-    name: "Resultados",
-    icon: "nc-icon nc-paper-2",
-    component: Resultados,
-    layout: "/admin",
-    roles: ['Administrador']
-  },
-  {
-    path: "/treinamentos",
-    name: "Treinamentos",
-    icon: "nc-icon nc-circle-09",
-    component: Treinamentos,
-    layout: "/admin",
-    roles: ['Administrador']
-  },
-  {
-    path: "/table",
-    name: "CheckList's",
-    icon: "nc-icon nc-notes",
-    component: TableList,
-    layout: "/admin",
-    roles: ['Administrador']
-
-  },
-
-  {
-    path: "/maps",
-    name: "Mapa de Rede",
-    icon: "nc-icon nc-map-big",
-    component: Maps,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador']
-  },
-  {
-    path: "/certificados",
-    name: "Certificados",
+    name: "Usuários",
     icon: "nc-icon nc-single-copy-04",
-    component: Certificados,
     layout: "/admin",
-    roles: ['Administrador', 'Financeiro']
-  },
-  {
-    path: "/catalogo_ead",
-    name: "Catalogo EAD",
-    icon: "nc-icon nc-ruler-pencil",
-    component: Catalogo,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador']
-  },
-  {
-    path: "/Compras",
-    name: "Pendência Compra",
-    icon: "nc-icon nc-money-coins",
-    component: Compras,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador', 'Financeiro']
-  },
-  {
-    path: "/BaseConhecimento",
-    name: "Base Conhecimento",
-    icon: "nc-icon nc-atom",
-    component: BaseConhecimento,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador', 'Financeiro']
-  },
-  {
-    path: "/NR",
-    name: "NR - Checklist",
-    icon: "nc-icon nc-single-copy-04",
-    component: NRs,
-    layout: "/admin",
-    roles: ['Administrador', 'Visualizador'],
+    roles: ['Administrador', 'Visualizador'], 
     subMenu: [
-        {
-            path: "/NR",
-            name: "NR",
-            component: NRs,
-            layout: "/admin",
-        },
-        {
-            path: "/NR2",
-            name: "NR2",
-            component: NR2,
-            layout: "/admin",
-        },
-        {
-            path: "/NR3",
-            name: "NR3",
-            component: NR3,
-            layout: "/admin",
-        },
+      {
+        
+        path: "/NovoUsuario",
+        name: "Novo Usuário",
+        component: NRs,
+        layout: "/admin",
+        roles: ['Administrador', 'Visualizador'],
+      
+      },
+      {
+        
+        path: "/GerenciarUsuario",
+        name: "Gerenciar Usuário",
+        component: NR2,
+        layout: "/admin",
+        roles: ['Administrador', 'Visualizador'],
+        
+      },
+      {
+       
+        path: "/Usuarios",
+        name: "Usuários",
+        component: NR3,
+        layout: "/admin",
+        roles: ['Administrador', 'Visualizador'],
+        
+      },
     ]
-},
-
+  },
+  {
+    name: "Instituições",
+    icon: "nc-icon nc-single-copy-04",
+    layout: "/admin",
+    roles: ['Administrador', 'Visualizador'], 
+    subMenu: [
+      {
+        
+        path: "/NovaInstituicao",
+        name: "Nova Instituição",
+        component: NR4,
+        layout: "/admin",
+        roles: ['Administrador', 'Visualizador'],
+      
+      },
+    ]
+  },
+  {
+    name: "Programas",
+    icon: "nc-icon nc-single-copy-04",
+    layout: "/admin",
+    roles: ['Administrador', 'Visualizador'], 
+    subMenu: [
+      {
+        
+        path: "/TodosProgramas",
+        name: "Todos os Programas",
+        component: NR5,
+        layout: "/admin",
+        roles: ['Administrador', 'Visualizador'],
+      
+      },
+    ]
+  },
 ];
-
 
 export default dashboardRoutes;

@@ -7,7 +7,6 @@ import Sidebar from "components/Sidebar/Sidebar";
 import routes from "routes.js";
 import sidebarImage from "assets/img/sidebar-4.jpg";
 
-
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
@@ -19,11 +18,32 @@ function Admin() {
     const role = localStorage.getItem('role');
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
+        if (prop.subMenu) {
+          return prop.subMenu.map((subRoute, subIdx) => {
+            if (subRoute.roles && !subRoute.roles.includes(role)) {
+              return (
+                <Route
+                  path={prop.layout + subRoute.path}
+                  render={(props) => <ErrorPage {...props} />}
+                  key={`${key}_${subIdx}`}
+                />
+              );
+            } else {
+              return (
+                <Route
+                  path={prop.layout + subRoute.path}
+                  render={(props) => <subRoute.component {...props} />}
+                  key={`${key}_${subIdx}`}
+                />
+              );
+            }
+          });
+        }
         if (prop.roles && !prop.roles.includes(role)) {
           return (
             <Route
               path={prop.layout + prop.path}
-              render={(props) => <ErrorPage {...props} />}  // ErrorPage é um componente que você precisará criar
+              render={(props) => <ErrorPage {...props} />}
               key={key}
             />
           );
@@ -59,7 +79,7 @@ function Admin() {
   return (
     <>
       <div className="wrapper">
-      <Sidebar color={color} image={hasImage ? image : ""} routes={routes} role={localStorage.getItem('role')} />
+        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} role={localStorage.getItem('role')} />
 
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />

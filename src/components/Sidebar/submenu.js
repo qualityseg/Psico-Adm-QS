@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Collapse } from 'react-bootstrap';
 import "./style.modules.css";
 
 function SubMenu({ icon, title, items, activeRoute, layout }) {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname.indexOf(path) > -1 ? "active" : "";
+  };
 
   return (
     <li className={open ? "active" : ""}>
@@ -21,7 +26,7 @@ function SubMenu({ icon, title, items, activeRoute, layout }) {
         <div>
           <ul className="nav">
             {items.map((item, key) => (
-              <li key={key}>
+              <li key={key} className={isActive(item.path)}>
                 <NavLink
                   to={layout + item.path}
                   className="nav-link"

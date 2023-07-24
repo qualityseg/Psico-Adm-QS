@@ -59,3 +59,8 @@ li a i {
   font-size: 24px; /* Ajuste o tamanho conforme necessário */
   margin-right: 10px; /* Espaço entre o ícone e o texto */
 }
+/* Link do item do submenu ativo */
+.submenu .active {
+  color: #4CAF50; /* Cor do texto */
+  background-color: #f9f9f9; /* Cor de fundo */
+}

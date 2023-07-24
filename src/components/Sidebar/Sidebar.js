@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import logo from "../../assets/img/reactlogo.png";
+import logo from "../../assets/img/logo.png";
 import sidebarImage from "../../assets/img/sidebar-4.jpg";
 import SubMenu from './submenu';
 
@@ -14,13 +14,8 @@ function Sidebar({ color, image, routes }) {
   };
 
   return (
-    <div className="sidebar" data-image={sidebarImage} data-color={color}>
-      <div
-        className="sidebar-background"
-        style={{
-          backgroundImage: `url(${image})`
-        }}
-      />
+    <div className="sidebar" data-color="green">
+      
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
           <a
