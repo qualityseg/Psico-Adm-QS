@@ -2,22 +2,23 @@ import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import logo from "../../assets/img/logo.png";
+import sidebarImage from "../../assets/img/sidebar-4.jpg";
 import SubMenu from './submenu';
 
-function Sidebar({ color, routes }) {
+function Sidebar({ color, image, routes }) {
   const location = useLocation();
   const role = localStorage.getItem('role');
-
+  
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
 
   return (
-    <div className="sidebar" data-color={color}>
+    <div className="sidebar" data-image={sidebarImage} data-color={color}>
       <div
         className="sidebar-background"
         style={{
-          backgroundColor: `white` // Aqui definimos a cor do background como branco
+          backgroundImage: `url(${image})`
         }}
       />
       <div className="sidebar-wrapper">
@@ -36,7 +37,7 @@ function Sidebar({ color, routes }) {
             if (prop.roles && !prop.roles.includes(role)) {
               return null;
             }
-
+            
             if (prop.subMenu) {
               return (
                 <SubMenu
