@@ -1,66 +1,70 @@
-/* Link do menu */
+/* Adicione uma transição suave para os links do menu */
 .nav-link {
-  display: flex; /* Use flexbox para alinhar o ícone e o texto */
-  align-items: center; /* Alinhe verticalmente o ícone e o texto */
-}
-
-/* Ícone do menu */
-.nav-link i {
-  font-size: 24px; /* Ajuste o tamanho conforme necessário */
-  margin-right: 10px; /* Espaço entre o ícone e o texto */
-}
-
-/* Cabeçalho do submenu */
-.submenu-header {
-  display: flex; /* Use flexbox para alinhar o ícone e o texto */
-  align-items: center; /* Alinhe verticalmente o ícone e o texto */
-}
-
-/* Ícone do cabeçalho do submenu */
-.submenu-header i {
-  font-size: 24px; /* Ajuste o tamanho conforme necessário */
-  margin-right: 10px; /* Espaço entre o ícone e o texto */
-}
-
-.submenu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Submenu items */
-.submenu li {
-  padding: 10px 20px; /* Ajuste esse valor conforme necessário */
-}
-
-
-/* Links do submenu */
-.submenu li a {
-  color: #fff; /* Cor do texto */
-  text-decoration: none; /* Remove o sublinhado dos links */
-  font-size: 16px; /* Tamanho do texto */
-  padding: 10px 20px; /* Espaçamento interno */
-}
-
-/* Links do submenu ao passar o mouse */
-.submenu li a:hover {
-  background-color: rgba(0, 0, 0, 0.2); /* Ajuste a cor de fundo conforme o desejado */
   transition: all 0.3s ease;
 }
 
-
-li a {
-  display: flex; /* Use flexbox para alinhar o ícone e o texto */
-  align-items: center; /* Alinhe verticalmente o ícone e o texto */
+/* Mude a cor e o fundo do link ao passar o mouse */
+.nav-link:hover {
+  color: #4CAF50;
+  background-color: #f9f9f9;
 }
 
-/* Ícone do menu */
-li a i {
-  font-size: 24px; /* Ajuste o tamanho conforme necessário */
-  margin-right: 10px; /* Espaço entre o ícone e o texto */
+/* Adicione uma animação de rotação ao ícone do menu ao passar o mouse */
+.nav-link:hover i {
+  transform: rotate(360deg);
+  transition: all 0.5s ease;
 }
-/* Link do item do submenu ativo */
-.submenu .active {
-  color: #4CAF50; /* Cor do texto */
-  background-color: #f9f9f9; /* Cor de fundo */
+
+/* Adicione uma transição suave para os links do submenu */
+.submenu li a {
+  transition: all 0.3s ease;
+}
+
+/* Mude a cor e o fundo do link do submenu ao passar o mouse */
+.submenu li a:hover {
+  color: #4CAF50;
+  background-color: #f9f9f9;
+}
+
+/* Adicione uma animação de rotação ao ícone do submenu ao passar o mouse */
+.submenu li a:hover i {
+  transform: rotate(360deg);
+  transition: all 0.5s ease;
+}
+/* Estilo para o submenu quando está expandido */
+.submenu .collapse.show {
+  background-color: #f9f9f9; /* Cor de fundo quando o submenu está expandido */
+}
+
+/* Estilo para os links do submenu quando o submenu está expandido */
+.submenu .collapse.show a {
+  color: #333; /* Cor do texto quando o submenu está expandido */
+}
+
+/* Estilo para os links do submenu ao passar o mouse quando o submenu está expandido */
+.submenu .collapse.show a:hover {
+  color: #4CAF50; /* Cor do texto ao passar o mouse quando o submenu está expandido */
+  background-color: #f9f9f9; /* Cor de fundo ao passar o mouse quando o submenu está expandido */
+}
+/* Estilo para o submenu quando está expandido */
+.custom-submenu {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #333; /* Cor de fundo quando o submenu está expandido */
+}
+
+/* Estilo para os links do submenu quando o submenu está expandido */
+.custom-submenu a {
+  color: #f9f9f9; /* Cor do texto quando o submenu está expandido */
+}
+
+/* Estilo para os links do submenu ao passar o mouse quando o submenu está expandido */
+.custom-submenu a:hover {
+  color: #4CAF50; /* Cor do texto ao passar o mouse quando o submenu está expandido */
+  background-color: #f9f9f9; /* Cor de fundo ao passar o mouse quando o submenu está expandido */
+}
+/* Adicione isso ao seu arquivo style.modules.css */
+.active-submenu-item {
+  text-decoration: underline;
+  font-weight: bold;
 }

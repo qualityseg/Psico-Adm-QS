@@ -16,7 +16,7 @@ const dashboardRoutes = [
   },
   {
     name: "Usuários",
-    icon: "nc-icon nc-single-copy-04",
+    icon: "nc-icon nc-single-02",
     layout: "/admin",
     roles: ['Administrador', 'Visualizador'], 
     subMenu: [
@@ -51,7 +51,7 @@ const dashboardRoutes = [
   },
   {
     name: "Instituições",
-    icon: "nc-icon nc-single-copy-04",
+    icon: "nc-icon nc-bank",
     layout: "/admin",
     roles: ['Administrador', 'Visualizador'], 
     subMenu: [
@@ -68,7 +68,7 @@ const dashboardRoutes = [
   },
   {
     name: "Programas",
-    icon: "nc-icon nc-single-copy-04",
+    icon: "nc-icon nc-align-left-2",
     layout: "/admin",
     roles: ['Administrador', 'Visualizador'], 
     subMenu: [
