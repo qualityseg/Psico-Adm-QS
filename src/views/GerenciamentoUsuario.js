@@ -27,6 +27,7 @@ const NR2 = () => {
         console.log(error);
       });
   };
+  
 
   const handleEdit = (index) => {
     setEditIndex(index);
