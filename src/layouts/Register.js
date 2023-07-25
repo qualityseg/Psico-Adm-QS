@@ -10,7 +10,7 @@ const images = [backgroundImage1, backgroundImage2, backgroundImage3];
 
 function Register() {
   const [usuario, setUsuario] = useState("");
-  const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+  const BASE_URL = process.env.REACT_APP_API_BASE_URL ;
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
