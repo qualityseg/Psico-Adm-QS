@@ -36,7 +36,7 @@ function Register() {
     const user = {usuario, nome, email, senha, unidade, setor, acesso};
   
     try {
-      const response = await axios.post(`https://concerned-bat-sweatshirt.cyclic.app/register_usuario`, user);
+      const response = await axios.post(`https://fair-ruby-caterpillar-wig.cyclic.app/register_usuario`, user);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -47,12 +47,13 @@ function Register() {
 
   const handleDeleteUsers = async () => {
     try {
-      const response = await axios.delete(`https://concerned-bat-sweatshirt.cyclic.app/deleteAll`);
+      const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/deleteAllUsers`);
       alert(response.data.message);
     } catch (error) {
       console.error(error);
     }
   }
+
 
   return (
     <div className={styles.container} style={{backgroundImage: `url(${images[backgroundIndex]})`}}>
