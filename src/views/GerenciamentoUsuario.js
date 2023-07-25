@@ -19,7 +19,7 @@ const NR2 = () => {
   }, []);
   
   const carregarUsuarios = () => {
-    axios.get('${process.env.REACT_APP_API_URL}/users')
+    axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/users')
       .then(response => {
         setUsuarios(response.data.users);
       })
@@ -34,7 +34,7 @@ const NR2 = () => {
   };
 
   const handleSave = () => {
-    axios.put(`${process.env.REACT_APP_API_URL}/cadastro_clientes/${editData.id}`, editData)
+    axios.put(`https://fair-ruby-caterpillar-wig.cyclic.app/cadastro_clientes/${editData.id}`, editData)
       .then(response => {
         console.log(response.data);
         setEditIndex(-1);
@@ -48,7 +48,7 @@ const NR2 = () => {
 
 
   const handleDelete = (id) => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`)
+    axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/users/${id}`)
       .then(response => {
         console.log(response.data);
         carregarUsuarios();

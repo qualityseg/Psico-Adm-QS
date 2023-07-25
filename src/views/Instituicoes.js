@@ -20,7 +20,7 @@ const NR3 = () => {
 
   const carregarUsuarios = async () => {
     try {
-      const response = await axios.get('${process.env.REACT_APP_API_URL}/users');
+      const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/users');
       setUsuarios(response.data.users);
     } catch (error) {
       console.error(error);
