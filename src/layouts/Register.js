@@ -10,7 +10,7 @@ const images = [backgroundImage1, backgroundImage2, backgroundImage3];
 
 function Register() {
   const [usuario, setUsuario] = useState("");
-  const BASE_URL = process.env.REACT_APP_API_BASE_URL ;
+
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ function Register() {
     const user = {usuario, nome, email, senha, unidade, setor, acesso};
   
     try {
-      const response = await axios.post(`${BASE_URL}/register_usuario`, user);
+      const response = await axios.post(`https://concerned-bat-sweatshirt.cyclic.app/register_usuario`, user);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ function Register() {
 
   const handleDeleteUsers = async () => {
     try {
-      const response = await axios.delete(`${BASE_URL}/deleteAll`);
+      const response = await axios.delete(`https://concerned-bat-sweatshirt.cyclic.app/deleteAll`);
       alert(response.data.message);
     } catch (error) {
       console.error(error);
