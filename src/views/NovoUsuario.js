@@ -101,7 +101,7 @@ const NRs = () => {
     e.preventDefault(); // Impede o comportamento padrão de recarregar a página
 
     // Envia os dados para o servidor
-    axios.post('http://localhost:5000/register', formData)
+    axios.post('${process.env.REACT_APP_API_URL}/register', formData)
       .then(response => {
         console.log(response.data); // Exibe a resposta do servidor no console
         // Lógica adicional após o sucesso do salvamento no banco de dados

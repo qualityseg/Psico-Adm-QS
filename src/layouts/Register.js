@@ -35,16 +35,17 @@ function Register() {
     const user = {usuario, nome, email, senha, unidade, setor, acesso};
 
     try {
-      const response = await axios.post('https://weak-erin-bighorn-sheep-gear.cyclic.app/register', user);
+      const response = await axios.post('https://concerned-bat-sweatshirt.cyclic.app/register_usuario', user);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   }
 
+
   const handleDeleteUsers = async () => {
     try {
-      const response = await axios.delete('https://weak-erin-bighorn-sheep-gear.cyclic.app/deleteAll');
+      const response = await axios.delete('https://concerned-bat-sweatshirt.cyclic.app/deleteAll');
       alert(response.data.message);
     } catch (error) {
       console.error(error);

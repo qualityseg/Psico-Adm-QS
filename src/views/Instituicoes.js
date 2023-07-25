@@ -20,7 +20,7 @@ const NR3 = () => {
 
   const carregarUsuarios = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get('${process.env.REACT_APP_API_URL}/users');
       setUsuarios(response.data.users);
     } catch (error) {
       console.error(error);

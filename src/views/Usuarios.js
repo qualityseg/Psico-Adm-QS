@@ -17,23 +17,24 @@ const NR3 = () => {
   useEffect(() => {
     carregarUsuarios();
   }, []);
-
+  
   const carregarUsuarios = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
       setUsuarios(response.data.users);
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   // Funções de manipulação de eventos
   const handleEdit = (id) => {
-    history.push(`/edit/${id}`);
+    history.push(`${process.env.REACT_APP_API_URL}/edit/${id}`);
   };
 
   const handleRedirect = () => {
-    history.push('/admin/NR2');
+    history.push('${process.env.REACT_APP_API_URL}/admin/NR2');
   };
 
   const handleSearch = (e) => {
