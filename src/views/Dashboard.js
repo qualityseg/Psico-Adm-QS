@@ -26,7 +26,7 @@ const Dashboard = () => {
           <BootstrapCard className="text-center card-btn h-100">
             <BootstrapCard.Body>
               <BootstrapCard.Title>Usuários Cadastrados</BootstrapCard.Title>
-              <BootstrapCard.Text>Total de cadastros: {userCount}</BootstrapCard.Text>
+              <BootstrapCard.Text>Total de cadastros</BootstrapCard.Text>
             </BootstrapCard.Body>
           </BootstrapCard>
         </Col>
