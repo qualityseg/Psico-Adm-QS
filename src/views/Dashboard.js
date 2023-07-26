@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
+      <Row className="mb-4 d-flex justify-content-center"> {/* Aqui foi adicionado as classes 'd-flex' e 'justify-content-center' */}
         <Col xs={12} md={4} className="mb-4">
           <BootstrapCard className="text-center card-btn h-100">
             <BootstrapCard.Body>
