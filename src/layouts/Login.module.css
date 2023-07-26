@@ -1,71 +1,99 @@
 .container {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 1s ease-in-out;
+  background-color: #F0F0F0;
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #1A6F45;
-    opacity: 0.4;
-    z-index: 1;
-  }
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.1);
+}
 
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+.iconContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  margin-bottom: 20px;
+  width: 50%;
+  max-width: 200px;
+  height: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: #f2f2f2;
+}
+
+.button {
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007BFF;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Adicionando regras de media query para responsividade */
+@media (max-width: 768px) {
   .content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 600px;
-    height: 600px;
-    background: linear-gradient(to bottom, #0C251F, #1A6F45); /* Adicionado gradiente de fundo */
-    border-radius: 30px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    padding: 40px;
+    width: 90%;
   }
 
   .title {
-    margin-bottom: 30px;
-    color: #FFFFFF; 
-    font-family: 'Roboto', sans-serif; 
-    text-transform: uppercase; 
-    letter-spacing: 1.2px;
+    font-size: 0.9em;
   }
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
+  .icon {
+    width: 70%;
+    max-width: 150px;
   }
 
   .input {
-    margin-bottom: 20px;
     padding: 10px;
-    width: 80%;
-    max-width: 300px;
+    font-size: 0.9em;
   }
 
   .button {
     padding: 10px;
-    background-color: #1A6F45;
-    border-radius: 5px;
-  }
-
-  .icon {
-    margin-right: 15px;
-    width: 175px;
-    height: 135px;
   }
 }
