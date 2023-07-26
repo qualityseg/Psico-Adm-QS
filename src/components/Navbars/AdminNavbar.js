@@ -55,18 +55,7 @@ function Header() {
           <span className="navbar-toggler-bar burger-lines"></span>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav mr-auto" navbar>
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="nc-icon nc-zoom-split"></i>
-                <span className="d-lg-block">Pesquisar</span>
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
+          
           <div className="d-flex justify-content-center align-items-center ml-2 ml-lg-0">
 
             <Button
@@ -116,7 +105,7 @@ function Header() {
                 href="#pablo"
                 onClick={handleLogout}
               >
-                <span className="no-icon">Log out</span>
+                <span className="no-icon">Sair</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>

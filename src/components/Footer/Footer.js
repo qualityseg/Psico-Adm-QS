@@ -24,31 +24,10 @@ class Footer extends Component {
       <footer className="footer px-0 px-lg-3">
         <Container fluid>
           <nav>
-            <ul className="footer-menu">
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Company
-                </a>
-              </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Portfolio
-                </a>
-              </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Blog
-                </a>
-              </li>
-            </ul>
+            
             <p className="copyright text-center">
               © {new Date().getFullYear()}{" "}
-              <a>QualitySEG </a>Back-End em desenvolvimento constante pela IA da #QSLib Versão 1.10.25
+              <a>LifeMed </a>Back-End em desenvolvimento constante pela IA da #QSLib Versão 2.15.2
             </p>
           </nav>
         </Container>
