@@ -9,7 +9,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getUserCount = async () => {
       try {
-        const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/cadastro_clientes/usercount');
+        const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/usercount');
         setUserCount(response.data.count);
       } catch (error) {
         console.error(error);
