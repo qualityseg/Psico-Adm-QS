@@ -27,6 +27,7 @@ const Dashboard = () => {
             <BootstrapCard.Body>
               <BootstrapCard.Title>Usuários Cadastrados</BootstrapCard.Title>
               <BootstrapCard.Text>Total de cadastros</BootstrapCard.Text>
+              <BootstrapCard.Text className="display-4">{userCount}</BootstrapCard.Text> {/* Aqui está a contagem do usuário */}
             </BootstrapCard.Body>
           </BootstrapCard>
         </Col>
