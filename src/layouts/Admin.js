@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { useLocation, Route, Switch } from "react-router-dom";
-import ErrorPage from "./ErrorPage"; // Adicionado aqui
+import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import ErrorPage from "./ErrorPage";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 import routes from "routes.js";
 import sidebarImage from "assets/img/sidebar-4.jpg";
+import UsuariosPorInstituicao from "views/UsuariosPorInstituicao.js"; // Ou o local correto do seu componente
 
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
@@ -13,6 +14,10 @@ function Admin() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+
+  const isAuthenticated = () => {
+    return localStorage.getItem('token') !== null;
+  };
 
   const getRoutes = (routes) => {
     const role = localStorage.getItem('role');
@@ -84,7 +89,13 @@ function Admin() {
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
           <div className="content">
-            <Switch>{getRoutes(routes)}</Switch>
+            <Switch>
+              {getRoutes(routes)}
+              <Route
+                path="/admin/UsuariosPorInstituicao"
+                render={(props) => isAuthenticated() ? <UsuariosPorInstituicao {...props} /> : <Redirect to="/login" />}
+              />
+            </Switch>
           </div>
           <Footer />
         </div>

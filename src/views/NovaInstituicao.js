@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import './NovaInstituicao.scss';
@@ -12,6 +12,16 @@ const NRs = () => {
   const [importPathPositions, setImportPathPositions] = useState('');
   const [users, setUsers] = useState([{name: '', identifier: '', status: 'Registrando'}]);
 
+  const carregarUsuarios = async () => {
+    try {
+      const instituicao = localStorage.getItem("instituicao"); 
+      const response = await axios.get(`https://sua-api.com/usuarios?instituicao=${instituicao}`);
+      setUsuarios(response.data.users);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   function addUser() {
     setUsers([...users, {name: '', identifier: '', status: 'Registrando'}]);
   }
@@ -177,6 +187,7 @@ const NRs = () => {
       ...prevState,
       [name]: value,
     }));
+    
     if (name === 'zipCode') {
       const cep = value.replace(/\D/g, '');
       if (cep.length === 8) {
@@ -196,7 +207,13 @@ const NRs = () => {
           });
       }
     }
+  
+    // Aqui está a nova condição para lidar com o campo 'instituicao'.
+    if (name === 'instituicao') {
+      localStorage.setItem('instituicao', value);
+    }
   };
+  
 
   const removeContact = (indexToRemove) => {
     setFormData(prevState => ({
@@ -265,6 +282,18 @@ const NRs = () => {
         // Lógica adicional para tratar erros
       });
   };
+
+  useEffect(() => {
+    // adicione outros códigos de montagem aqui
+  
+    // adicione o evento beforeunload ao window
+    window.addEventListener("beforeunload", handleUnload);
+  }, []);
+  
+  const handleUnload = (e) => {
+    localStorage.removeItem("instituicao");
+  };
+  
 
 
   return (
@@ -544,7 +573,13 @@ const NRs = () => {
         <Card.Header>
           USUÁRIOS
           <span style={{ cursor: 'pointer', float: 'right', marginLeft: '25px' }} onClick={addUser}>ADICIONAR</span>
-          <span style={{ cursor: 'pointer', float: 'right' }} onClick={()=>{}}>LISTAR...</span>
+          <button 
+              style={{ cursor: 'pointer', float: 'right', marginLeft: '25px' }} 
+              onClick={() => window.open('/UsuariosPorInstituicao', '_blank')}>
+              LISTAR...
+          </button>
+
+
         </Card.Header>
         <Card.Body>
           {users.map((user, index) => (
