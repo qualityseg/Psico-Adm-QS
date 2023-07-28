@@ -28,6 +28,7 @@ const NR3 = () => {
   };
   
 
+
   // Funções de manipulação de eventos
   const handleEdit = (id) => {
     history.push(`${process.env.REACT_APP_API_URL}/edit/${id}`);

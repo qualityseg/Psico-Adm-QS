@@ -12,15 +12,7 @@ const NRs = () => {
   const [importPathPositions, setImportPathPositions] = useState('');
   const [users, setUsers] = useState([{name: '', identifier: '', status: 'Registrando'}]);
 
-  const carregarUsuarios = async () => {
-    try {
-      const instituicao = localStorage.getItem("instituicao"); 
-      const response = await axios.get(`https://sua-api.com/usuarios?instituicao=${instituicao}`);
-      setUsuarios(response.data.users);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
   
   function addUser() {
     setUsers([...users, {name: '', identifier: '', status: 'Registrando'}]);
@@ -208,10 +200,7 @@ const NRs = () => {
       }
     }
   
-    // Aqui está a nova condição para lidar com o campo 'instituicao'.
-    if (name === 'instituicao') {
-      localStorage.setItem('instituicao', value);
-    }
+
   };
   
 
@@ -261,39 +250,37 @@ const NRs = () => {
     'Tocantins',
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Impede o comportamento padrão de recarregar a página
+  const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    for (const contact of formData.contacts) {
-      if (contact.category === '--SELECIONE--') {
-        alert('Por favor, selecione uma categoria para todos os contatos.');
-        return; // Não envie os dados se "--SELECIONE--" foi selecionado em alguma categoria
-      }
+  const instituicaoData = {
+    instituicao: inputs.instituicao,
+    cnpj: inputs.cnpj,
+    inscricao_estadual: inputs.inscricao_estadual,
+    razao_social: inputs.razao_social,
+    logradouro: inputs.logradouro,
+    numero: inputs.numero,
+    complemento: inputs.complemento,
+    bairro: inputs.bairro,
+    cidade: inputs.cidade,
+    estado: inputs.estado,
+    cep: inputs.cep,
+    contatos: inputs.contatos,
+    unidades: inputs.unidades,
+    setores: inputs.setores,
+    cargos: inputs.cargos,
+    usuarios: inputs.usuarios,
+  };
+
+  try {
+    const response = await axios.post("https://fair-ruby-caterpillar-wig.cyclic.app/nova-instituicao", instituicaoData);
+    if (response.data) {
+      console.log("Dados salvos com sucesso!");
     }
-
-    // Envia os dados para o servidor
-    axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/register', formData)
-      .then(response => {
-        console.log(response.data); // Exibe a resposta do servidor no console
-        // Lógica adicional após o sucesso do salvamento no banco de dados
-      })
-      .catch(error => {
-        console.log(error); // Exibe erros no console, se houver
-        // Lógica adicional para tratar erros
-      });
-  };
-
-  useEffect(() => {
-    // adicione outros códigos de montagem aqui
-  
-    // adicione o evento beforeunload ao window
-    window.addEventListener("beforeunload", handleUnload);
-  }, []);
-  
-  const handleUnload = (e) => {
-    localStorage.removeItem("instituicao");
-  };
-  
+  } catch (error) {
+    console.error("Erro ao salvar os dados", error);
+  }
+};
 
 
   return (
@@ -462,27 +449,7 @@ const NRs = () => {
                       <hr />
                   </div>
               ))}
-              <Form.Group as={Row}>
-                  <Form.Label column md={2}>Importar:</Form.Label>
-                  <Col md={10}>
-                      <OverlayTrigger
-                          placement="top"
-                          delay={{ show: 250, hide: 400 }}
-                          overlay={
-                              <Tooltip id={`tooltip-top`}>
-                                  Insira o caminho para o arquivo que você deseja importar.
-                              </Tooltip>
-                          }
-                      >
-                          <Form.Control 
-                              type="text"
-                              name="importPath"
-                              value={importPath}
-                              onChange={handleImportChange}
-                          />
-                      </OverlayTrigger>
-                  </Col>
-              </Form.Group>
+              
           </Card.Body>
       </Card>
 
@@ -515,16 +482,7 @@ const NRs = () => {
               <hr />
             </div>
           ))}
-          <Form.Group as={Row}>
-            <Form.Label column md={2}>Importar:</Form.Label>
-            <Col md={10}>
-              <Form.Control 
-                type="text"
-                value={importPathSectors}
-                onChange={handleImportChangeSectors}
-              />
-            </Col>
-          </Form.Group>
+         
         </Card.Body>
       </Card>
 
@@ -555,16 +513,7 @@ const NRs = () => {
               <hr />
             </div>
           ))}
-          <Form.Group as={Row}>
-            <Form.Label column md={2}>Importar:</Form.Label>
-            <Col md={10}>
-              <Form.Control 
-                type="text"
-                value={importPathPositions}
-                onChange={handleImportChangePositions}
-              />
-            </Col>
-          </Form.Group>
+        
         </Card.Body>
       </Card>
 
@@ -573,12 +522,7 @@ const NRs = () => {
         <Card.Header>
           USUÁRIOS
           <span style={{ cursor: 'pointer', float: 'right', marginLeft: '25px' }} onClick={addUser}>ADICIONAR</span>
-          <button 
-              style={{ cursor: 'pointer', float: 'right', marginLeft: '25px' }} 
-              onClick={() => window.open('/UsuariosPorInstituicao', '_blank')}>
-              LISTAR...
-          </button>
-
+          
 
         </Card.Header>
         <Card.Body>
@@ -608,17 +552,6 @@ const NRs = () => {
                 </Col>
               </Form.Group>
               <Form.Group as={Row}>
-                <Form.Label column md={2}>Status:</Form.Label>
-                <Col md={10}>
-                  <Form.Control 
-                    type="text"
-                    name="status"
-                    value={user.status}
-                    readOnly
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
                 <Col md={{ offset: 2, span: 10 }}>
                   <Button onClick={() => removeUser(index)} style={{ margin: '3px' }}>REMOVER</Button>
                 </Col>
@@ -630,66 +563,6 @@ const NRs = () => {
       </Card>
 
 
-        <Card>
-          <Card.Header>IMPORTAÇÃO</Card.Header>
-          <Card.Body>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Importação Simples*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="instituicao" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Importação por arquivo*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="cpnj" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Método de Importação*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="inscricaoestadual" onChange={handleChange} required/></Col>
-            </Form.Group>
-        
-            
-          </Card.Body>
-        </Card>
-
-        <Card>
-          <Card.Header>CONFIGURAÇÕES DE CADASTRO</Card.Header>
-          <Card.Body>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>CPF Obrigatório*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="instituicao" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Telefone Obrigatório*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="cpnj" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Endereço Obrigatório*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="inscricaoestadual" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Dados Empresariais Obritatórios*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="razaosocial" onChange={handleChange} required/></Col>
-            </Form.Group>
-            
-          </Card.Body>
-        </Card>
-
-        <Card>
-          <Card.Header>CONFIGURAÇÕES DE API</Card.Header>
-          <Card.Body>
-          <Form.Group as={Row}>
-              <Form.Label column sm={9}>Solicitar recuperação de acesso:</Form.Label>
-              <Col sm={3} className="d-flex align-items-center">
-                <Form.Check type="checkbox" name="accessRecovery" inline onChange={handleCheckChange} />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Chave de Acesso à API Externa*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="instituicao" onChange={handleChange} required/></Col>
-            </Form.Group>
-            
-            
-          </Card.Body>
-        </Card>
 
 
         <Button type="submit" variant="primary" className="mt-3">Salvar</Button>

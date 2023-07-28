@@ -24,8 +24,7 @@ root.render(
     <Switch>
       <Route path="/login" render={(props) => <Login {...props} />} />
       <Route path="/register" render={(props) => <Register {...props} />} />
-      <Route path="/admin/UsuariosPorInstituicao" render={(props) => isAuthenticated() ? <UsuariosPorInstituicao {...props} /> : <Redirect to="/login" />} />
-
+     
       <Route path="/admin" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/login" />} />
       <Redirect from="/" to="/login" />
     </Switch>
