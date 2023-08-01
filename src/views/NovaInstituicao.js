@@ -15,7 +15,10 @@ const NRs = () => {
  
   
   function addUser() {
-    setUsers([...users, {name: '', identifier: '', status: 'Registrando'}]);
+    setFormData(prevState => ({
+      ...prevState,
+      users: [...prevState.users, { name: '', identifier: '', status: 'Registrando' }],
+    }));
   }
   
   function removeUser(index) {
@@ -101,6 +104,7 @@ const NRs = () => {
     access: 'Visualizador',
     contacts: [],
     units: [],
+    users: [],
   });
 
   // Adicione uma nova unidade
@@ -139,7 +143,7 @@ const NRs = () => {
       contacts: [...prevState.contacts, { category: '', phone: '' }],
     }));
   };
-  
+
   
   const handleContactChange = (e, index) => {
     const { name, value } = e.target;
@@ -175,33 +179,46 @@ const NRs = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-    
-    if (name === 'zipCode') {
-      const cep = value.replace(/\D/g, '');
-      if (cep.length === 8) {
-        axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(response => {
-            const { logradouro, bairro, localidade, uf } = response.data;
-            setFormData(prevState => ({
-              ...prevState,
-              address: logradouro,
-              district: bairro,
-              city: localidade,
-              state: uf,
-            }));
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+  
+    // Remove the CNPJ validation from here
+    if (name === 'cnpj') {
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
     }
   
+    if (name === 'identifier' && !isValidCPF(value) && !isValidEmail(value)) {
+        alert('Por favor, insira um CPF ou E-mail válido.');
+        return;
+    }
 
-  };
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+    }));
+  
+    if (name === 'zipCode') {
+        const cep = value.replace(/\D/g, '');
+        if (cep.length === 8) {
+            axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => {
+                    const { logradouro, bairro, localidade, uf } = response.data;
+                    setFormData(prevState => ({
+                        ...prevState,
+                        address: logradouro,
+                        district: bairro,
+                        city: localidade,
+                        state: uf,
+                    }));
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }
+};
+
   
 
   const removeContact = (indexToRemove) => {
@@ -251,37 +268,169 @@ const NRs = () => {
   ];
 
   const handleSubmit = async (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const instituicaoData = {
-    instituicao: inputs.instituicao,
-    cnpj: inputs.cnpj,
-    inscricao_estadual: inputs.inscricao_estadual,
-    razao_social: inputs.razao_social,
-    logradouro: inputs.logradouro,
-    numero: inputs.numero,
-    complemento: inputs.complemento,
-    bairro: inputs.bairro,
-    cidade: inputs.cidade,
-    estado: inputs.estado,
-    cep: inputs.cep,
-    contatos: inputs.contatos,
-    unidades: inputs.unidades,
-    setores: inputs.setores,
-    cargos: inputs.cargos,
-    usuarios: inputs.usuarios,
-  };
+    // Extract the values from formData
+    const {
+      instituicao,
+      cnpj,
+      inscricao_estadual,
+      razao_social,
+      logradouro,
+      numero,
+      complemento,
+      bairro,
+      cidade,
+      estado,
+      cep,
+      contatos,
+      unidades,
+      setores,
+      cargos,
+      usuarios
+    } = formData;
 
-  try {
-    const response = await axios.post("https://fair-ruby-caterpillar-wig.cyclic.app/nova-instituicao", instituicaoData);
-    if (response.data) {
-      console.log("Dados salvos com sucesso!");
+    if (!isValidCNPJ(cnpj)) {
+      alert('CNPJ inválido');
+      return;
     }
-  } catch (error) {
-    console.error("Erro ao salvar os dados", error);
-  }
+
+    // Validação de cada CPF e email dos usuários
+    for (let user of users) {
+      if (!isValidCPF(user.identifier) && !isValidEmail(user.identifier)) {
+        alert('CPF ou email de usuário inválido');
+        return;
+      }
+    }
+
+    const data = {
+      instituicao: instituicao,
+      cnpj: cnpj,
+      inscricao_estadual: inscricao_estadual,
+      razao_social: razao_social,
+      logradouro: logradouro,
+      numero: numero,
+      complemento: complemento,
+      bairro: bairro,
+      cidade: cidade,
+      estado: estado,
+      cep: cep,
+      contatos: contatos,
+      unidades: unidades,
+      setores: setores,
+      cargos: cargos,
+      usuarios: usuarios,
+    };
+
+    try {
+      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/nova-instituicao', data);
+
+      if (response.data.success) {
+        alert('Instituição criada com sucesso!');
+      } else {
+        alert('Erro ao criar instituição!');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao criar instituição!');
+    }
 };
 
+  
+  function isValidCNPJ(cnpj) {
+    cnpj = cnpj.replace(/[^\d]+/g,'');
+  
+    if(cnpj == '') return false;
+    
+    if (cnpj.length != 14)
+        return false;
+  
+    // Elimina CNPJs invalidos conhecidos
+    if (cnpj == "00000000000000" || 
+        cnpj == "11111111111111" || 
+        cnpj == "22222222222222" || 
+        cnpj == "33333333333333" || 
+        cnpj == "44444444444444" || 
+        cnpj == "55555555555555" || 
+        cnpj == "66666666666666" || 
+        cnpj == "77777777777777" || 
+        cnpj == "88888888888888" || 
+        cnpj == "99999999999999")
+        return false;
+        
+    // Valida DVs
+    let size = cnpj.length - 2
+    let numbers = cnpj.substring(0,size);
+    let digits = cnpj.substring(size);
+    let sum = 0;
+    let pos = size - 7;
+    for (let i = size; i >= 1; i--) {
+      sum += numbers.charAt(size - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+    if (result != digits.charAt(0))
+        return false;
+        
+    size = size + 1;
+    numbers = cnpj.substring(0,size);
+    sum = 0;
+    pos = size - 7;
+    for (let i = size; i >= 1; i--) {
+      sum += numbers.charAt(size - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+    if (result != digits.charAt(1))
+          return false;
+          
+    return true;
+  }
+  
+  function isValidCPF(cpf) {  
+    cpf = cpf.replace(/[^\d]+/g,'');    
+    if(cpf == '') return false; 
+    // Elimina CPFs invalidos conhecidos  
+    if (cpf.length != 11 || 
+      cpf == "00000000000" || 
+      cpf == "11111111111" || 
+      cpf == "22222222222" || 
+      cpf == "33333333333" || 
+      cpf == "44444444444" || 
+      cpf == "55555555555" || 
+      cpf == "66666666666" || 
+      cpf == "77777777777" || 
+      cpf == "88888888888" || 
+      cpf == "99999999999")
+        return false;       
+    // Valida 1o digito 
+    let add = 0;    
+    for (let i=0; i < 9; i ++)       
+      add += parseInt(cpf.charAt(i)) * (10 - i);  
+      let rev = 11 - (add % 11);  
+      if (rev == 10 || rev == 11)     
+        rev = 0;    
+      if (rev != parseInt(cpf.charAt(9)))     
+        return false;       
+    // Valida 2o digito 
+    add = 0;    
+    for (let i = 0; i < 10; i ++)        
+      add += parseInt(cpf.charAt(i)) * (11 - i);  
+    rev = 11 - (add % 11);  
+    if (rev == 10 || rev == 11) 
+      rev = 0;    
+    if (rev != parseInt(cpf.charAt(10)))
+      return false;     
+    return true; 
+  }
+  
+  function isValidEmail(email) {
+    const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return regex.test(email);
+  }
+  
 
   return (
     <Container>
@@ -296,7 +445,7 @@ const NRs = () => {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column md={2}>CNPJ*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="cpnj" onChange={handleChange} required/></Col>
+            <Col md={10}><Form.Control type="text" name="cnpj" onChange={handleChange} required/></Col>
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column md={2}>Inscrição Estadual*:</Form.Label>

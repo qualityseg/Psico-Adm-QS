@@ -14,7 +14,7 @@ function Sidebar({ color, image, routes }) {
   };
 
   return (
-    <div className="sidebar" data-image={sidebarImage} data-color={color}>
+    <div className="sidebar" data-image={sidebarImage} data-color={'green'}>
       <div
         className="sidebar-background"
         style={{
