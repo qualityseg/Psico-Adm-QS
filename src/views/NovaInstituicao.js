@@ -11,7 +11,9 @@ const NRs = () => {
   const [importPathSectors, setImportPathSectors] = useState('');
   const [importPathPositions, setImportPathPositions] = useState('');
   const [users, setUsers] = useState([{name: '', identifier: '', status: 'Registrando'}]);
-
+  const [contacts, setContacts] = useState([
+    { name: '', phone: '', category: '' }  // Inicialize todos os campos com uma string vazia
+  ]);
  
   
   function addUser() {
@@ -147,7 +149,16 @@ const NRs = () => {
   
   const handleContactChange = (e, index) => {
     const { name, value } = e.target;
+    const newContacts = [...contacts];
   
+    // Se não existe um objeto de contato neste índice, crie um
+    if (!newContacts[index]) {
+      newContacts[index] = {};
+    }
+
+    newContacts[index][name] = value;
+    setContacts(newContacts);
+
     // Verificar se "--SELECIONE--" foi selecionado
     if (value === '--SELECIONE--') {
       alert('Por favor, selecione uma categoria.');
@@ -533,7 +544,7 @@ const NRs = () => {
                   <Form.Control 
                     type="text"
                     name="name"
-                    value={contact.name}
+                    value={contact.name || ''}
                     onChange={(e) => handleContactChange(e, index)}
                   />
                 </Col>
