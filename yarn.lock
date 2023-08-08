@@ -8506,6 +8506,11 @@
   "resolved" "https://registry.npmjs.org/node-addon-api/-/node-addon-api-5.1.0.tgz"
   "version" "5.1.0"
 
+"node-cpf-cnpj@^1.0.2":
+  "integrity" "sha512-ZOhERzFK8TODrZIzkth7fbPsMhI9q+JzvXYetwAv95/5GOTugpyHnGazIbGPNH3L568gfOx67lvqT/niRYKJeA=="
+  "resolved" "https://registry.npmjs.org/node-cpf-cnpj/-/node-cpf-cnpj-1.0.2.tgz"
+  "version" "1.0.2"
+
 "node-fetch@^2.6.7":
   "integrity" "sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.12.tgz"

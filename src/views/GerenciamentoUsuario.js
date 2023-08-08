@@ -19,13 +19,18 @@ const NR2 = () => {
   }, []);
   
   const carregarUsuarios = () => {
-    axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/users')
-      .then(response => {
-        setUsuarios(response.data.users);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/usuarios')
+    .then(response => {
+        if (response.data && Array.isArray(response.data)) {
+            setUsuarios(response.data);
+        } else {
+            console.error("Unexpected data format:", response.data);
+        }
+    })
+    .catch(error => {
+        console.error("API Error:", error);
+    });
+
   };
   
 
@@ -49,7 +54,7 @@ const NR2 = () => {
 
 
   const handleDelete = (id) => {
-    axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/users/${id}`)
+    axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/usuarios/${id}`)
       .then(response => {
         console.log(response.data);
         carregarUsuarios();
@@ -83,7 +88,7 @@ const NR2 = () => {
         </tr>
       </thead>
       <tbody>
-        {usuarios.map((usuario, index) => (
+        {(usuarios || []).map((usuario, index) => ( // Correção aqui
           <tr key={usuario.id}>
             {columns.map((column, idx) => (
               <td key={idx}>
@@ -116,6 +121,7 @@ const NR2 = () => {
       </tbody>
     </Table>
   );
+  
 };
 
 export default NR2;

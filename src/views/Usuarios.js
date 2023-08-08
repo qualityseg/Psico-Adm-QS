@@ -20,12 +20,13 @@ const NR3 = () => {
   
   const carregarUsuarios = async () => {
     try {
-      const response = await axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/users`);
-      setUsuarios(response.data.users);
+        const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/usuarios');
+        setUsuarios(response.data || []); // garanta que é um array
     } catch (error) {
-      console.error(error);
+        console.error("Error fetching users:", error);
     }
-  };
+};
+
   
 
 
@@ -43,7 +44,7 @@ const NR3 = () => {
   };
 
   // Filtragem de usuários
-  const filteredUsuarios = usuarios.filter(usuario =>
+  const filteredUsuarios = (usuarios || []).filter(usuario => 
     usuario.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     usuario.email.toLowerCase().includes(searchTerm.toLowerCase())
   );

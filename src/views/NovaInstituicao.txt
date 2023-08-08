@@ -84,23 +84,18 @@ const NovaInstituicao = () => {
 
   const handleChange = (e, field, index = null) => {
     const { name, value } = e.target;
-
-    if (field === 'contatos' && index !== null) { 
-        const updatedContatos = [...contatos];
-        updatedContatos[index][name] = value;
-        setContatos(updatedContatos);
-    } else if (field === 'usuarios' && index !== null) {
-        const updatedUsuarios = [...usuarios];
-        updatedUsuarios[index][name] = value;
-        setUsuarios(updatedUsuarios);
-    } else {
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+    
+    if (index !== null) { // Se estamos atualizando um contato
+      const updatedContatos = [...contatos];
+      updatedContatos[index][name] = value;
+      setContatos(updatedContatos);
+    } else { // Se estamos atualizando formData
+      setFormData({
+        ...formData,
+        [name]: value
+      });
     }
-};
-
+  };
 
   
   
@@ -222,6 +217,11 @@ const NovaInstituicao = () => {
     setUsuarios([...usuarios, { nome: '', identificador: '' }]);
   };
   
+  const handleUsuarioChange = (e, index, field) => {
+    const updatedUsuarios = [...usuarios];
+    updatedUsuarios[index][field] = e.target.value;
+    setUsuarios(updatedUsuarios);
+  };
   
   const isValidEmail = (email) => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -266,84 +266,21 @@ const NovaInstituicao = () => {
   };
   
   const [isCNPJValid, setIsCNPJValid] = useState(true);
-  const [cnpjData, setCNPJData] = useState({ cnpj: '' });
-
 
   // Função para lidar com a mudança do CNPJ
   const handleCNPJChange = (e) => {
     const value = e.target.value;
     const valid = isValidCNPJ(value);
     setIsCNPJValid(valid);
-  
-    // Atualize o estado com o valor do CNPJ
-    setFormData(prevState => ({
-      ...prevState,
-      cnpj: value
-    }));
-  };
-  
 
-  const handleSubmit = async (e) => {
+    // Atualize o estado do CNPJ aqui, se necessário
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Destructure the relevant fields from formData and endereco state
-    const {
-      instituicao,
-      inscricaoEstadual,
-      razaoSocial,
-      numero,
-      complemento,
-    } = formData;
-    const { cnpj } = formData; // Assuming cnpjData contains the cnpj information
-    const {
-      logradouro,
-      bairro,
-      cidade,
-      estado,
-      cep,
-    } = endereco;
-    // Construct the data to be sent to the server
-    const dataToSend = {
-      nome: instituicao,
-      cnpj: cnpj,
-      inscricaoEstadual: inscricaoEstadual,
-      razaoSocial: razaoSocial,
-      logradouro: logradouro,
-      numero: numero,
-      complemento: complemento,
-      bairro: bairro,
-      cidade: cidade,
-      estado: estado,
-      pais: 'Brasil',
-      cep: cep,
-      contatos: contatos,
-      unidades: unidades,
-      setores: setores,
-      cargos: cargos,
-      usuarios: usuarios,
-    };
-  
-    // Send a POST request to the server
-    try {
-      const response = await fetch('https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
-      });
-  
-      if (response.ok) {
-        alert('Instituição registrada com sucesso!');
-      } else {
-        throw new Error('Erro ao enviar os dados para o servidor');
-      }
-    } catch (error) {
-      console.error('Erro ao enviar os dados para o servidor:', error);
-    }
-    console.log(dataToSend);
-
+    // Aqui você pode adicionar a lógica para enviar os dados do formulário
+    console.log(formData);
   };
-  
-  
 
   return (
     <Container>
@@ -422,64 +359,53 @@ const NovaInstituicao = () => {
         </Card>
         <Card>
           <Card.Header>CONTATOS</Card.Header>
-            <Card.Body>
-                {contatos.map((contato, index) => (
-                    <div key={index} className="mb-4">
-                        <Form.Group>
-                            <Form.Label>Categoria</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="categoria"
-                                onChange={(e) => handleChange(e, 'contatos', index)}
-                                value={contato.categoria}
-                            >
-                                <option value="" disabled>--SELECIONE--</option>
-                                <option value="Administrativo">Administrativo</option>
-                                <option value="Técnico">Técnico</option>
-                                <option value="Cobrança">Cobrança</option>
-                                <option value="Especifique">Especifique...</option>
-                            </Form.Control>
-                            {contato.categoria === "Especifique" && (
-                                <div className="mt-2">
-                                    <Form.Label>Especifique a Categoria</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="categoriaEspecifica"
-                                        placeholder="Digite a categoria"
-                                        onChange={(e) => handleChange(e, 'contatos', index)}
-                                        value={contato.categoriaEspecifica}
-                                    />
-                                </div>
-                            )}
-                            <Form.Label className="mt-2">Nome Completo</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="nomeCompleto" 
-                                onChange={(e) => handleChange(e, 'contatos', index)} 
-                                value={contato.nomeCompleto} 
-                            />
-                            <Form.Label className="mt-2">Telefone</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="telefone" 
-                                onChange={(e) => handleChange(e, 'contatos', index)} 
-                                value={contato.telefone}
-                            />
-                        </Form.Group>
-                        {contatos.length > 1 && (
-                            <Button 
-                                variant="danger" 
-                                onClick={() => handleRemoveContato(index)}
-                                className="mb-2"
-                            >
-                                Remover
-                            </Button>
-                        )}
+          <Card.Body>
+            {contatos.map((contato, index) => (
+              <div key={index} className="mb-4">
+                <Form.Group>
+                  <Form.Label>Categoria</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="categoria"
+                    onChange={(e) => handleChange(e, index)}
+                    value={contato.categoria}
+                  >
+                    <option value="" disabled>--SELECIONE--</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Cobrança">Cobrança</option>
+                    <option value="Especifique">Especifique...</option>
+                  </Form.Control>
+                  {contato.categoria === "Especifique" && (
+                    <div className="mt-2">
+                      <Form.Label>Especifique a Categoria</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="categoriaEspecifica"
+                        placeholder="Digite a categoria"
+                        onChange={(e) => handleChange(e, index)}
+                        value={contato.categoriaEspecifica}
+                      />
                     </div>
-                ))}
-                <Button onClick={handleAddContato} style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Adicionar Contato</Button>
-            </Card.Body>
-
+                  )}
+                  <Form.Label className="mt-2">Nome Completo</Form.Label>
+                  <Form.Control type="text" name="nomeCompleto" onChange={(e) => handleChange(e, index)} />
+                  <Form.Label className="mt-2">Telefone</Form.Label>
+                  <Form.Control type="text" name="telefone" onChange={(e) => handleChange(e, index)}/>
+                </Form.Group>
+                {contatos.length > 1 && (
+                  <Button 
+                    variant="danger" 
+                    onClick={() => handleRemoveContato(index)}
+                    className="mb-2"
+                  >
+                    Remover
+                  </Button>
+                )}
+              </div>
+            ))}
+            <Button onClick={handleAddContato} style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Adicionar Contato</Button>
+          </Card.Body>
         </Card>
 
 
@@ -571,44 +497,42 @@ const NovaInstituicao = () => {
 
       <Card>
         <Card.Header>USUÁRIOS</Card.Header>
-          <Card.Body>
-              {usuarios.map((usuario, index) => (
-                  <div key={index} className="mb-4">
-                      <Form.Group>
-                          <Form.Label>Nome</Form.Label>
-                          <Form.Control
-                              type="text"
-                              name="nome"
-                              value={usuario.nome}
-                              onChange={(e) => handleChange(e, 'usuarios', index)}
-                          />
-                      </Form.Group>
-                      <Form.Group>
-                          <Form.Label>Identificador (CPF ou E-Mail)</Form.Label>
-                          <Form.Control
-                              type="text"
-                              name="identificador"
-                              placeholder="CPF ou E-Mail"
-                              value={usuario.identificador}
-                              onChange={(e) => handleChange(e, 'usuarios', index)}
-                          />
-                      </Form.Group>
-                      {usuarios.length > 1 && (
-                          <Button 
-                              variant="danger" 
-                              onClick={() => handleRemoveUsuario(index)}
-                              className="mb-2"
-                          >
-                              Remover
-                          </Button>
-                      )}
-                  </div>
-              ))}
-              <Button onClick={handleAddUsuario} style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Adicionar Usuário</Button>
-          </Card.Body>
+        <Card.Body>
+          {usuarios.map((usuario, index) => (
+            <div key={index} className="mb-4">
+              <Form.Group>
+                <Form.Label>Nome</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="nome"
+                  value={usuario.nome}
+                  onChange={(e) => handleUsuarioChange(e, index)}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Identificador (CPF ou E-Mail)</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="identificador"
+                  placeholder="CPF ou E-Mail"
+                  value={usuario.identificador}
+                  onChange={(e) => handleUsuarioChange(e, index)}
+                />
+              </Form.Group>
+              {usuarios.length > 1 && (
+                <Button 
+                  variant="danger" 
+                  onClick={() => handleRemoveUsuario(index)}
+                  className="mb-2"
+                >
+                  Remover
+                </Button>
+              )}
+            </div>
+          ))}
+          <Button onClick={handleAddUsuario} style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Adicionar Usuário</Button>
+        </Card.Body>
       </Card>
-
-
 
 
         <Button type="submit" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Registrar Instituição</Button>

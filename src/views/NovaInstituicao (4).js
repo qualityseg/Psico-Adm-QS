@@ -1,19 +1,3 @@
-preciso criar uma pagina em react bootstrap para meu sistema de painel admnistrativo ( light bootstrap da creativetim ), a pagina que quero criar precisam ter 7 colunas com os seguintes nomes: IDENTIFICAÇÃO , ENDEREÇO, CONTATOS, UNIDADES, SETORES, CARGOS, USUÁRIOS. em IDENTIFICAÇÃO ele precisa ter os seguintes campos de formularios: INSTITUIÇÃO: (String) , CNPJ: (Precisa ser preenchido por um valor valido de CNPJ ), INSCRIÇÃO ESTADUAL: (string) e RAZÃO SOCIAL: ( String ). em ENDEREÇO ele precisa ter os seguintes campos de formularios: LOGRADOURO: , NÚMERO: , COMPLEMENTO: , BAIRRO: , CIDADE:, ESTADO: , PAÍS:, CEP: ( Se for fornecido um cep valido, deve preencher os demais campos com o endereço correspondente ). Em contatos a coluna precisa ter um text clicavel no canto direito da coluna escrito ADICIONAR, onde se o usuario clicar deve adicionar outra coluna dentro dessa coluna CONTATOS com os campos: CATEGORIA ( Opções: --SELECIONAR-- , Administrativo, Tecnico , Cobrança e Especifique.. , onde --SELECIONAR-- não deve ser valido para ser salvo e "Especifique.." deve pedir um input do usuario para que ele forneça uma string valida ) , esse botão ADICIONAR deve sempre adicionar dentro e no fim da Coluna CONTATOS uma nova coluna com esses campos que mencionei anteriormente e uma linha que ira separar os formularios caso o usuario adicione mais de uma coluna dentro de CONTATOS. Em UNIDADES ele precisa ter o seguinte campo de formulario: UNIDADE: , essa coluna UNIDADES deve conter a mesma logica que CONTATOS com o texto clicavel ADICIONAR no canto direito da coluna, onde se o usuario clicar ele deve adicionar outra coluna dentro dessa coluna UNIDADES com outro campo UNIDADE, isso é devido caso o usuario queria adicionar mais unidades. Em SETORES ele precisa ter o seguinte campo de formulario: SETOR: , essa coluna SETROES deve conter a mesma logica que CONTATOS com o texto clicavel ADICIONAR no canto direito da coluna, onde se o usuario clicar ele deve adicionar outra coluna dentro dessa coluna SETORES com outro campo SETOR, isso é devido caso o usuario queria adicionar mais setores. Em CARGOS ele precisa ter o seguinte campo de formulario: CARGO: , essa coluna CARGOS deve conter a mesma logica que CONTATOS com o texto clicavel ADICIONAR no canto direito da coluna, onde se o usuario clicar ele deve adicionar outra coluna dentro dessa coluna CARGOS com outro campo CARGO, isso é devido caso o usuario queria adicionar mais cargos. Em USUÁRIOS ele precisa ter os seguintes campos de formulario: NOME: , IDENTIFICADOR: (deve ser preenchido por um CPF VALIDO ou um EMAIL valido ) essa coluna USUÁRIOS deve conter a mesma logica que CONTATOS com o texto clicavel ADICIONAR no canto direito da coluna, onde se o usuario clicar ele deve adicionar outra coluna dentro dessa coluna USUÁRIOS com outros campos NOME: e IDENTIFICADOR:, isso é devido caso o usuario queria adicionar mais usuarios. no fim deve conter um botão salvar onde ele deve chamar o meu endpoint "https://fair-ruby-caterpillar-wig.cyclic.app/nova-instituicao" , para mais detalhes desse meu endpoint estou anexando o arquivo Server.js que é o meu servidor NODE JS. esse é um exemplo de pagina react do meu projeto fazendo algumas importações : "import React, { useState , useEffect } from 'react';
-import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
-import axios from 'axios';
-import './NovaInstituicao.scss';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
-
-const NovaInstituicao = () => {
-}
-
-export default NovaInstituicao;"
-
-prompt : crie agora para essa coluna: em ENDEREÇO ele precisa ter os seguintes campos de formularios: LOGRADOURO: , NÚMERO: , COMPLEMENTO: , BAIRRO: , CIDADE:, ESTADO: , PAÍS:, CEP: ( Se for fornecido um cep valido, deve preencher os demais campos com o endereço correspondente ).
-
-
-
 import React, { useState , useEffect } from 'react';
 import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
@@ -664,5 +648,3 @@ const NRs = () => {
 }
 
 export default NRs;
-
-poderia criar um formulario de cadastro de instituições em react? preciso que separe em colunas: Nova_Instituicao ( Colunas: instituicao, cnpj, inscricao_estadual, razao_social, logradouro, numero, complemento, bairro, cidade, estado, cep ) ; Contatos ( Colunas: categoria (--SELECIONE--; Administrativo; Cobrança; Tecnico; Especifique..), nome_completo e telefone ) ; Unidades ( Colunas: id, instituicao_id e nome ) ; Setores ( Colunas: id, instituicao_id e nome) ;  Cargos  ( Colunas: id, instituicao_id e nome) ; Usuarios ( Colunas: nome, identificador(CPF ou Email) e Telefone ).
