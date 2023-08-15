@@ -39,8 +39,11 @@ function Header() {
   
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem('role'); // Remova o token do localStorage
-    localStorage.removeItem('token');
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('instituicaoNome');
+    localStorage.removeItem('role');
+    localStorage.removeItem('birthDate');
+    localStorage.removeItem('cpf');
     localStorage.removeItem('username'); // Remova o nome do usuário do localStorage
     setUsername(""); // Limpe o estado do nome do usuário
     history.push('/login'); // Redirecione o usuário para a página de login

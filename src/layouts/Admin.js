@@ -7,6 +7,7 @@ import Sidebar from "components/Sidebar/Sidebar";
 import routes from "routes.js";
 import sidebarImage from "assets/img/sidebar-4.jpg";
 
+
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
@@ -21,7 +22,7 @@ function Admin() {
   const getRoutes = (routes) => {
     const role = localStorage.getItem('role');
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/admin" || prop.layout === "/usuario") { // Verificar ambos os layouts
         if (prop.subMenu) {
           return prop.subMenu.map((subRoute, subIdx) => {
             if (subRoute.roles && !subRoute.roles.includes(role)) {

@@ -10,8 +10,10 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
-import Login from "layouts/Login.js";
-import Register from "layouts/Register.js"
+import AdminLogin from "layouts/AdminLogin.js";
+import UserLogin from "views/UserLogin.js";
+import Register from "layouts/Register.js";
+import PrimeiroAcesso from "views/PrimeiroAcesso";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -21,12 +23,15 @@ const isAuthenticated = () => {
 
 root.render(
   <BrowserRouter>
+  
     <Switch>
-      <Route path="/login" render={(props) => <Login {...props} />} />
-      <Route path="/register" render={(props) => <Register {...props} />} />
-     
-      <Route path="/admin" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/login" />} />
-      <Redirect from="/" to="/login" />
+      <Route exact path="/" render={() => <Redirect to="/UserLogin" />} />
+        <Route path="/admin" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/login" />} />
+        <Route path="/AdminLogin" render={(props) => <AdminLogin {...props} />} />
+        <Route path="/PrimeiroAcesso" render={(props) => <PrimeiroAcesso {...props} />} />
+        <Route path="/usuario" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/UserLogin" />} />
+        <Route path="/UserLogin" render={(props) => <UserLogin {...props} />} />
+        <Redirect from="/" to="/UserLogin" />
     </Switch>
   </BrowserRouter>
 );

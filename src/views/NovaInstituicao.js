@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
+import { Form, Button, Card, Container, Col, Row, Alert } from 'react-bootstrap';
 import './NovaInstituicao.scss';
 import axios from 'axios';
 
@@ -216,10 +216,11 @@ const NovaInstituicao = () => {
     setCargos(updatedCargos);
   };
   
-  const [usuarios, setUsuarios] = useState([{ nome: '', identificador: '' }]);
+  const [usuarios, setUsuarios] = useState([{ nome: '', identificador: '', senha: '' }]);
+
 
   const handleAddUsuario = () => {
-    setUsuarios([...usuarios, { nome: '', identificador: '' }]);
+    setUsuarios([...usuarios, { nome: '', identificador: '', senha: '', }]);
   };
   
   
@@ -282,6 +283,8 @@ const NovaInstituicao = () => {
     }));
   };
   
+  const [notification, setNotification] = useState(null);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -332,15 +335,20 @@ const NovaInstituicao = () => {
       });
   
       if (response.ok) {
-        alert('Instituição registrada com sucesso!');
+        setNotification({
+          type: 'success',
+          message: 'Instituição registrada com sucesso!',
+        });
       } else {
         throw new Error('Erro ao enviar os dados para o servidor');
       }
     } catch (error) {
+      setNotification({
+        type: 'danger',
+        message: 'Erro ao enviar os dados para o servidor',
+      });
       console.error('Erro ao enviar os dados para o servidor:', error);
     }
-    console.log(dataToSend);
-
   };
   
   
@@ -592,6 +600,16 @@ const NovaInstituicao = () => {
                               value={usuario.identificador}
                               onChange={(e) => handleChange(e, 'usuarios', index)}
                           />
+                      <Form.Group>
+                        <Form.Label>Senha</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="senha"
+                          value={usuario.senha}
+                          onChange={(e) => handleChange(e, 'usuarios', index, 'senha')}
+                        />
+                      </Form.Group>
+
                       </Form.Group>
                       {usuarios.length > 1 && (
                           <Button 
@@ -608,7 +626,11 @@ const NovaInstituicao = () => {
           </Card.Body>
       </Card>
 
-
+      {notification && (
+      <Alert variant={notification.type}>
+        {notification.message}
+      </Alert>
+    )}                 
 
 
         <Button type="submit" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Registrar Instituição</Button>

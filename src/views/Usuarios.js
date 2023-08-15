@@ -108,8 +108,8 @@ const NR3 = () => {
                       <Button variant="light" onClick={() => handleEdit(usuario.id)}>
                         <img src="https://imgur.com/Z8FjlyT.png" alt="Editar" width="24" height="24" />
                       </Button>
-                      <Button variant="light" onClick={handleRedirect}>
-                        <img src="https://imgur.com/eIhi3oc.png" alt="Ir para NR2" width="24" height="24" />
+                      <Button variant="light" onClick={handleRedirect} >
+                        <img src="https://imgur.com/eIhi3oc.png" alt="Ir para Gerenciamento de Usuarios" width="24" height="24" />
                       </Button>
                     </td>
                   </tr>

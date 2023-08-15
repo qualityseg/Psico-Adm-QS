@@ -666,3 +666,22 @@ const NRs = () => {
 export default NRs;
 
 poderia criar um formulario de cadastro de instituições em react? preciso que separe em colunas: Nova_Instituicao ( Colunas: instituicao, cnpj, inscricao_estadual, razao_social, logradouro, numero, complemento, bairro, cidade, estado, cep ) ; Contatos ( Colunas: categoria (--SELECIONE--; Administrativo; Cobrança; Tecnico; Especifique..), nome_completo e telefone ) ; Unidades ( Colunas: id, instituicao_id e nome ) ; Setores ( Colunas: id, instituicao_id e nome) ;  Cargos  ( Colunas: id, instituicao_id e nome) ; Usuarios ( Colunas: nome, identificador(CPF ou Email) e Telefone ).
+
+
+instituicao; cnpj; inscricaoEstadual ; razaoSocial; logradouro; numero; complemento; bairro; cidade; estado; pais; cep; CL: Instituicoes 
+
+categoria; categoriaEspecifica; nomeCompleto; telefone; CL: Contatos
+
+unidade; CL: Unidades
+setor; CL: Setores
+cargo; CL: Cargos
+nome; identificador; CL: Usuarios
+
+prompt : pronto, o formulario de registro de instituição esta funcionando perfeitamente. preciso que entenda o contexto do meu projeto, estou desenvolvendo um sistema de uma clinica que ira fornecer avaliação de psicossocial tanto para a propria instituição ( LIFEMED) quanto para outras empresas. Então no sistema agora temos cadastro de Novo Usuário ( cadastro de acesso, e associar esse usuario a uma instituição ), Gerenciar Usuário ( Tabela que retorna todas as informações do banco de dados relacionado aos usuarios cadatrados na pagina 'Novo Usuario', podendo modificar dados e ate excluir esses usuarios do banco de dados ) e Usuários ( que contem uma barra de pesquisa e uma tabela com todos os usuarios, vendo informações importates sobre o mesmo )
+
+
+prompt: otimo, funcionou. preciso agora criar a pagina de TodosProgramas.js. Essa pagina precisa ter o mesmo estilo de formulario que usamos anteriormente, deve conter como titulo "Criar Programa" e na coluna "Programa" deve conter 2 campos : 'Nome do Programa:' , 'Link do Form. :' , precisa que contenha uma logica muito importante, o "programa" a ser adicionado na verdade é uma avaliação psicossocial feita no zoho forms que o usuario ira criar, dentro de Prefill URL Builder ele pede 4 variaveis: Nome, Instituição, Date e CPF. ao inserir esses dados no Prefill URL Builder do zoho forms ele gera uma url referente ao formulario ( avaliação psicossocial ), por exemplo o link da avaliação que tenho é "https://forms.zohopublic.com/engenharia10qualityseg/form/AvaliaoPsicossocial/formperma/pcy-J3mEi5QFgYqlf_VwbVsFNplqFgFNvTE9v_hJWVg" e ao adicionar as informações das 4 variaveis que mencionei fica: "https://forms.zohopublic.com/engenharia10qualityseg/form/AvaliaoPsicossocial/formperma/pcy-J3mEi5QFgYqlf_VwbVsFNplqFgFNvTE9v_hJWVg?nome=Matheus%20Miguel%20Dos%20Santos&instituicao=Qualityseg%20Consultoria&data=08%2F08%2F2023&cpf=417.070.868-77". a logica da pagina 'programas' é que na pagina PainelUsuario.js deve aparecer uma coluna clicavel que  ira puxar esse link do zoho forms fornecido pelo usuario e deve incluir no final do link essas 4 variaveis ( Date deve puxar a data atual, exemplo: 08/08/2023 ) e redirecionar o usuario em uma nova aba.
+
+prompt teste: uma informação para contexto, quando o usuario estiver logado e na pagina PainelUsuario.js e clicar nessa coluna clicavel que redireciona ao formulario do zoho forms com as variaveis formatadas no link do form , essas variaveis devem ser puxadas da tabela 'cadastro_clientes' , verificar qual usuario esta logado no sistema pelo "nome:"
+
+prompt: vamos melhorar a logica dessa segunda parte, a função deve puxar os dados de "Name" , "CPF", "Instituição" da tabela 'cadastro_clientes' e a variavel Date deve puxar a data atual no formato , exemplo, '08/08/2023' e incluir no link do form. Crie o codigo da pagina PainelUsuario.js , ela deve conter o titulo grande "Seja Bem-Vindo(a) !" e abaixo um subtitulo medio "Avaliações Disponiveis:". a logica dessa pagina PainelUsuario é se o usuario logado tiver

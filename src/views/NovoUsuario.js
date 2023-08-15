@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
+import { Form, Button, Card, Container, Col, Row, Alert  } from 'react-bootstrap';
 import axios from 'axios';
 import './NovosUsuarios.scss';
 
 const NRs = () => {
+
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -27,7 +28,7 @@ const NRs = () => {
     unit: '',
     sector: '',
     role: '',
-    institution: '',
+    institution: localStorage.getItem('instituicaoNome'),
     accessRecovery: false,
     access: 'Visualizador',
   });
@@ -97,18 +98,30 @@ const NRs = () => {
     'Tocantins',
   ];
 
+  // Adicione este estado para gerenciar a notificação
+  const [notification, setNotification] = useState(null);
+  
+
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Impede o comportamento padrão de recarregar a página
 
     // Envia os dados para o servidor
     axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/register', formData)
       .then(response => {
-        console.log(response.data); // Exibe a resposta do servidor no console
-        // Lógica adicional após o sucesso do salvamento no banco de dados
+        console.log(response.data); 
+        setNotification({
+          type: 'success',
+          message: 'Sucesso ao cadastrar Novo Usuário',
+        });
+  
       })
       .catch(error => {
-        console.log(error); // Exibe erros no console, se houver
-        // Lógica adicional para tratar erros
+        console.log(error); 
+        setNotification({
+          type: 'danger',
+          message: 'Falha ao cadastrar Novo Usuário',
+        });
       });
   };
 
@@ -236,9 +249,14 @@ const NRs = () => {
               <Form.Label column md={2}>Cargo*:</Form.Label>
               <Col md={10}><Form.Control type="text" name="role" onChange={handleChange} required/></Col>
             </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Instituição*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="institution" onChange={handleChange} required/></Col>
+            <Form.Group>
+              <Form.Label>INSTITUIÇÃO*:</Form.Label>
+              <Form.Control
+                type="text"
+                name="instituicao"
+                value={formData.institution}
+                readOnly
+              />
             </Form.Group>
           </Card.Body>
         </Card>
@@ -256,8 +274,13 @@ const NRs = () => {
           </Card.Body>
         </Card>
 
+        {notification && (
+        <Alert variant={notification.type}>
+          {notification.message}
+        </Alert>
+        )}
 
-        <Button type="submit" variant="primary" className="mt-3">Salvar</Button>
+        <Button type="submit" variant="primary" className="mt-3" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Salvar</Button>
       </Form>
     </Container>
   );
