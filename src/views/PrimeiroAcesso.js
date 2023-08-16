@@ -3,6 +3,12 @@ import { Container, Form, Button, Card, Alert, Col } from 'react-bootstrap'; // 
 import axios from 'axios';
 
 const PrimeiroAcesso = () => {
+  
+  // Applying background image to the body
+  document.body.style.backgroundImage = "url('https://imgur.com/9fb4848.png')";
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.height = '100vh';
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -36,7 +42,7 @@ const PrimeiroAcesso = () => {
   };
 
   return (
-    <div style={{ backgroundImage: 'url(https://imgur.com/AFbGNnn.png)', backgroundSize: 'cover', minHeight: '100vh' }}>
+  
     <Container className="mt-5" >
       <Col md={{ span: 6, offset: 3 }} style={{ marginTop: '150px' }}>
         <Card>
@@ -53,7 +59,7 @@ const PrimeiroAcesso = () => {
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                   </Form.Group>
-                  <Button onClick={verifyUser}>Verificar</Button>
+                  <Button style={{ backgroundColor: '#85BB32' }} onClick={verifyUser}>Verificar</Button>
                 </>
               ) : (
                 <>
@@ -61,7 +67,7 @@ const PrimeiroAcesso = () => {
                     <Form.Label>Senha</Form.Label>
                     <Form.Control type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
                   </Form.Group>
-                  <Button onClick={registerPassword}>Cadastrar senha</Button>
+                  <Button  style={{ backgroundColor: '#85BB32' }} onClick={registerPassword}>Cadastrar senha</Button>
                 </>
               )}
               {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
@@ -70,7 +76,7 @@ const PrimeiroAcesso = () => {
         </Card>
       </Col>
     </Container>
-    </div>
+   
   );
 };
 

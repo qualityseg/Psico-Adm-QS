@@ -29,23 +29,23 @@ const Login = (props) => {
   };
 
   return (
-    <div className={styles.container}>
+    
+    <div className={styles.container} style={{ backgroundImage: 'url(https://imgur.com/9fb4848.png)', backgroundSize: 'cover', Height: '100vh' }}>
       <div className={styles.content}>
         <div className={styles.title}>
-          <div className={styles.iconContainer}>
-            <img src={icon} alt="Icon" className={styles.icon} /> {/* Adicionando o ícone */}
-          </div>
+          
           <div className={styles.text}>
-            LifeMed | Psicossocial
+            LifeMed | Painel Administrativo
           </div>
         </div>
         <form onSubmit={handleLogin} className={styles.form}>
-          <input type="text" value={identificador} onChange={(e) => setIdentificador(e.target.value)} placeholder="Identificador" className={styles.input}/> {/* Mudança aqui */}
+          <input type="text" value={identificador} onChange={(e) => setIdentificador(e.target.value)} placeholder="E-Mail Identificador" className={styles.input}/> {/* Mudança aqui */}
           <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="Senha" className={styles.input}/>
           <button type="submit" className={styles.button}>Login</button>
         </form>
       </div>
     </div>
+    
   );
 };
 

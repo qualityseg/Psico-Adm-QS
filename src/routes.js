@@ -13,13 +13,14 @@ const dashboardRoutes = [
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
     layout: "/admin",
-    roles: ['Administrador', 'Visualizador']
+    roles: ['Administrador']
   },
   {
     path: "/painel-usuarios",
-    name: "Painel de Usuários",
+    name: "Painel de Usuário",
     component: PainelUsuario,
     layout: "/usuario",
+    icon: " nc-icon nc-badge",
     roles: ['Visualizador']
   },
   {

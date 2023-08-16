@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card, Alert, Col } from 'react-bootstrap';
-
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'; // Importe o useHistory
-import './Login.css'; // Importando o arquivo CSS
+import styles from './Login.css'; // Importando o arquivo CSS
 const Login = () => {
+  
+  // Applying background image to the body
+  document.body.style.backgroundImage = "url('https://imgur.com/9fb4848.png')";
+  document.body.style.backgroundSize = 'cover';
+
+  document.body.style.height = '100vh';
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
@@ -46,10 +52,11 @@ const Login = () => {
   
   
   return (
-    <div style={{ backgroundImage: 'url(https://imgur.com/AFbGNnn.png)', backgroundSize: 'cover', minHeight: '100vh' }}>
-    <Container className="login-container" style={{ height: '100vh' }}>
+
+    <Container className="login-container" style={{ height: '100vh', marginTop: '200px'}}>
       <Col md={{ span: 6, offset: 3 }}>
         <Card>
+          
           <Card.Header as="h5" className="text-center">Login</Card.Header>
           <Card.Body>
             <Form>
@@ -62,16 +69,15 @@ const Login = () => {
                 <Form.Control type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
               </Form.Group>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Button variant="primary" onClick={handleLogin} block>Logar</Button>
+              <Button style={{ backgroundColor: '#85BB32' }} variant="primary" onClick={handleLogin} block>Logar</Button>
             </Form>
             <div className="text-center mt-3">
-              <a href="/PrimeiroAcesso">Primeiro acesso</a>
+              <a href="/PrimeiroAcesso" >Primeiro acesso</a>
             </div>
           </Card.Body>
         </Card>
       </Col>
     </Container>
-    </div>
   );
 };
 
