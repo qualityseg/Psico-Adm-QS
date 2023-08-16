@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Container, Form, Button, Card, Alert, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'; // Importe o useHistory
 import styles from './Login.css'; // Importando o arquivo CSS
 const Login = () => {
-  
   // Applying background image to the body
-  document.body.style.backgroundImage = "url('https://imgur.com/9fb4848.png')";
-  document.body.style.backgroundSize = 'cover';
+  useEffect(() => {
+    document.body.style.backgroundImage = "url('https://imgur.com/9fb4848.png')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.height = '100vh';
 
-  document.body.style.height = '100vh';
-
+    // Cleanup function to remove the background image when the component is unmounted
+    return () => {
+      document.body.style.backgroundImage = null;
+      document.body.style.backgroundSize = null;
+      document.body.style.height = null;
+    };
+  }, []);
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
