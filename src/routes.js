@@ -13,7 +13,7 @@ const dashboardRoutes = [
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
     layout: "/admin",
-    roles: ['Administrador']
+    roles: ['Administrador', 'Dev']
   },
   {
     path: "/painel-usuarios",
@@ -27,7 +27,7 @@ const dashboardRoutes = [
     name: "Usuários",
     icon: "nc-icon nc-single-02",
     layout: "/admin",
-    roles: ['Administrador'], 
+    roles: ['Administrador', 'Dev'], 
     subMenu: [
       {
         
@@ -35,7 +35,7 @@ const dashboardRoutes = [
         name: "Novo Usuário",
         component: NRs,
         layout: "/admin",
-        roles: ['Administrador'],
+        roles: ['Administrador', 'Dev'],
       
       },
       {
@@ -44,7 +44,7 @@ const dashboardRoutes = [
         name: "Gerenciar Usuário",
         component: NR2,
         layout: "/admin",
-        roles: ['Administrador'],
+        roles: ['Administrador', 'Dev'],
         
       },
       {
@@ -53,7 +53,7 @@ const dashboardRoutes = [
         name: "Usuários",
         component: NR3,
         layout: "/admin",
-        roles: ['Administrador'],
+        roles: ['Administrador', 'Dev'],
         
       },
     ]
@@ -62,7 +62,7 @@ const dashboardRoutes = [
     name: "Instituições",
     icon: "nc-icon nc-bank",
     layout: "/admin",
-    roles: ['Administrador'], 
+    roles: ['Dev'], 
     subMenu: [
       {
         
@@ -70,7 +70,7 @@ const dashboardRoutes = [
         name: "Nova Instituição",
         component: NR4,
         layout: "/admin",
-        roles: ['Administrador'],
+        roles: ['Dev'],
       
       },
     ]
@@ -79,7 +79,7 @@ const dashboardRoutes = [
     name: "Programas",
     icon: "nc-icon nc-align-left-2",
     layout: "/admin",
-    roles: ['Administrador'], 
+    roles: ['Administrador', 'Dev'], 
     subMenu: [
       {
         
@@ -87,7 +87,7 @@ const dashboardRoutes = [
         name: "Todos os Programas",
         component: NR5,
         layout: "/admin",
-        roles: ['Administrador'],
+        roles: ['Administrador', 'Dev'],
       
       },
     ]
