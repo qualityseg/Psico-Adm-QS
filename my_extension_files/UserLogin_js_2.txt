@@ -1,0 +1,46 @@
+veItem('role');
+            localStorage.removeItem('birthDate');
+            localStorage.removeItem('cpf');
+          }, 3600000); // 1 hora
+  
+          history.push("/usuario/painel-usuarios");
+        } else {
+          setError('Falha na autenticação');
+        }
+      });
+  };
+  
+  
+  return (
+
+    <Container className="login-container" style={{ height: '100vh', marginTop: '200px'}}>
+      <Col md={{ span: 6, offset: 3 }}>
+        <Card>
+          
+          <Card.Header as="h5" className="text-center">Login</Card.Header>
+          <Card.Body>
+            <Form>
+              <Form.Group>
+                <Form.Label>Usuário</Form.Label>
+                <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Senha</Form.Label>
+                <Form.Control type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+              </Form.Group>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Button style={{ backgroundColor: '#85BB32' }} variant="primary" onClick={handleLogin} block>Logar</Button>
+            </Form>
+            <div className="text-center mt-3">
+              <a href="/PrimeiroAcesso" >Primeiro acesso</a>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Container>
+  );
+};
+
+
+export default Login;
+

@@ -4,6 +4,8 @@ import NR2 from "views/GerenciamentoUsuario.js";
 import NR3 from "views/Usuarios.js";
 import NR4 from "views/NovaInstituicao.js";
 import NR5 from "views/TodosProgramas.js";
+import GerenciamentoInstituicao from "views/GerenciamentoInstituicao.js";
+
 import PainelUsuario from "views/PainelUsuario.js";
 const dashboardRoutes = [
   
@@ -15,6 +17,14 @@ const dashboardRoutes = [
     layout: "/admin",
     roles: ['Administrador', 'Dev']
   },
+  {
+    path: "/GerenciarInstituicao",
+    name: "Gerenciar Instituição",
+    component: GerenciamentoInstituicao, // Import this at the top of the file
+    layout: "/admin",
+    roles: ['Administrador', 'Dev'],
+  },
+  
   {
     path: "/painel-usuarios",
     name: "Painel de Usuário",
