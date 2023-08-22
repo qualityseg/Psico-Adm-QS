@@ -13,13 +13,46 @@ const GerenciamentoInstituicoes = () => {
   const [notification, setNotification] = useState(null);
   const [editData, setEditData] = useState(null);
 
-
-  const handleEdit = (index) => {
-    const instituicaoToEdit = instituicoes[index];
-    setEditData(instituicaoToEdit);
-    setIsEditing(true);
+  const renderCell = (label, field, item, index, category) => {
+    return (
+      <React.Fragment>
+        <tr>
+          <td className="detail-cell">{label}</td>
+          <td className="detail-cell">
+            {isEditing ? (
+              <input
+                type="text"
+                value={editData[category][index][field]}
+                onChange={(e) => handleInputChange(e, index, category, field)}
+              />
+            ) : (
+              item[field]
+            )}
+          </td>
+        </tr>
+      </React.Fragment>
+    );
   };
   
+  const handleCancel = () => {
+    // Restaurar os valores originais, se necessário
+    // ...
+  
+    // Atualizar o estado para indicar que a edição foi cancelada
+    setIsEditing(false);
+  };
+  
+  const handleEdit = () => {
+    setEditData({
+      ...detalhesInstituicao.instituicoes[0], // Acessando os detalhes da instituição selecionada
+      cargos: detalhesInstituicao.cargos ? [...detalhesInstituicao.cargos] : [],
+      contatos: detalhesInstituicao.contatos ? [...detalhesInstituicao.contatos] : [],
+      setores: detalhesInstituicao.setores ? [...detalhesInstituicao.setores] : [],
+      unidades: detalhesInstituicao.unidades ? [...detalhesInstituicao.unidades] : [],
+      usuarios: detalhesInstituicao.usuarios ? [...detalhesInstituicao.usuarios] : [],
+    });
+    setIsEditing(true);
+  };
   
   
   const handleSave = async (index) => {
@@ -56,13 +89,6 @@ const handleDeleteInstituicao = async (id) => {
     setNotification({ type: 'danger', message: 'Erro ao excluir a instituição' });
   }
 };
-
-
-
-  
-  
-  
-  
   
   useEffect(() => {
     carregarInstituicoes();
@@ -90,11 +116,13 @@ const handleDeleteInstituicao = async (id) => {
       fetchDetails('/contatos'),
       fetchDetails('/setores'),
       fetchDetails('/unidades'),
-      fetchDetails('/usuarios'),
+      fetchDetails('/usuarios_instituicao'),
     ])
     .then(([instituicoes, cargos, contatos, setores, unidades, usuarios]) => {
+      console.log("Detalhes da Instituição:", { instituicoes, cargos, contatos, setores, unidades, usuarios });
       setDetalhesInstituicao({ instituicoes, cargos, contatos, setores, unidades, usuarios });
     })
+    
     .catch(error => {
       console.error("Erro ao carregar detalhes da instituição:", error);
     });
@@ -108,212 +136,224 @@ const handleDeleteInstituicao = async (id) => {
     carregarDetalhesInstituicao(instituicaoSelecionada.id);
   };
 // Função para renderizar a tabela de detalhes da instituição
-  const renderInstituicaoDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.instituicoes) return null;
+const renderInstituicaoDetails = () => {
+  if (!detalhesInstituicao || !detalhesInstituicao.instituicoes) return null;
+
+  const instituicaoDetails = isEditing ? editData : detalhesInstituicao.instituicoes[0];
+
+  const renderCell = (key) => (
+    isEditing ? (
+      <input
+        type="text"
+        value={instituicaoDetails[key]}
+        onChange={(e) => setEditData({ ...editData, [key]: e.target.value })}
+      />
+    ) : (
+      instituicaoDetails[key]
+    )
+  );
+
+  return (
+    <Table responsive bordered className="institution-details-table mb-4">
+      <tbody>
+        <tr><td className="detail-cell">Instituição</td><td className="detail-cell">{renderCell('instituicao')}</td></tr>
+        <tr><td className="detail-cell">CNPJ</td><td className="detail-cell">{renderCell('cnpj')}</td></tr>
+        <tr><td className="detail-cell">Inscrição Estadual</td><td className="detail-cell">{renderCell('inscricaoEstadual')}</td></tr>
+        <tr><td className="detail-cell">Razão Social</td><td className="detail-cell">{renderCell('razaoSocial')}</td></tr>
+        <tr><td className="detail-cell">Logradouro</td><td className="detail-cell">{renderCell('logradouro')}</td></tr>
+        <tr><td className="detail-cell">Número</td><td className="detail-cell">{renderCell('numero')}</td></tr>
+        <tr><td className="detail-cell">Complemento</td><td className="detail-cell">{renderCell('complemento')}</td></tr>
+        <tr><td className="detail-cell">Bairro</td><td className="detail-cell">{renderCell('bairro')}</td></tr>
+        <tr><td className="detail-cell">Cidade</td><td className="detail-cell">{renderCell('cidade')}</td></tr>
+        <tr><td className="detail-cell">Estado</td><td className="detail-cell">{renderCell('estado')}</td></tr>
+        <tr><td className="detail-cell">País</td><td className="detail-cell">{renderCell('pais')}</td></tr>
+        <tr><td className="detail-cell">CEP</td><td className="detail-cell">{renderCell('cep')}</td></tr>
+      </tbody>
+    </Table>
+  );
+};
+
+const renderCargosDetails = () => {
+  if (!detalhesInstituicao || !detalhesInstituicao.cargos) return null;
+
+  const renderCell = (value, fieldName, index) => {
+    if (isEditing) {
+      return (
+        <input
+          type="text"
+          value={editData.cargos[index][fieldName]}
+          onChange={(e) => handleCargoChange(e, fieldName, index)}
+        />
+      );
+    }
+    return value;
+  };
+
+  return (
+    <Table responsive bordered className="cargos-details-table mb-4">
+      <tbody>
+        {detalhesInstituicao.cargos.map((cargo, index) => (
+          <React.Fragment key={index}>
+            <tr>
+              <td className="detail-cell">Cargo</td>
+              <td className="detail-cell">{renderCell(cargo.cargo, 'cargo', index)}</td>
+            </tr>
+           
+          </React.Fragment>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
+// Função para lidar com a alteração dos campos de cargos
+const handleCargoChange = (e, fieldName, index) => {
+  const newCargos = [...editData.cargos];
+  newCargos[index][fieldName] = e.target.value;
+  setEditData({ ...editData, cargos: newCargos });
+};
+
+
   
-    const instituicaoDetails = detalhesInstituicao.instituicoes[0];
-  
-    return (
-      <Table responsive bordered className="institution-details-table mb-4">
-        <tbody>
-          <tr>
-            <td className="detail-cell">Instituição</td>
-            <td className="detail-cell">{instituicaoDetails.instituicao}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">CNPJ</td>
-            <td className="detail-cell">{instituicaoDetails.cnpj}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Inscrição Estadual</td>
-            <td className="detail-cell">{instituicaoDetails.inscricaoEstadual}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Razão Social</td>
-            <td className="detail-cell">{instituicaoDetails.razaoSocial}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Logradouro</td>
-            <td className="detail-cell">{instituicaoDetails.logradouro}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Número</td>
-            <td className="detail-cell">{instituicaoDetails.numero}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Complemento</td>
-            <td className="detail-cell">{instituicaoDetails.complemento}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Bairro</td>
-            <td className="detail-cell">{instituicaoDetails.bairro}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Cidade</td>
-            <td className="detail-cell">{instituicaoDetails.cidade}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">Estado</td>
-            <td className="detail-cell">{instituicaoDetails.estado}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">País</td>
-            <td className="detail-cell">{instituicaoDetails.pais}</td>
-          </tr>
-          <tr>
-            <td className="detail-cell">CEP</td>
-            <td className="detail-cell">{instituicaoDetails.cep}</td>
-          </tr>
-        </tbody>
-      </Table>
+const renderContatosDetails = () => {
+  // Utilizando ?. para evitar erro se detalhesInstituicao for null ou undefined
+  const dataSource = isEditing ? editData.contatos : detalhesInstituicao?.contatos;
+
+  if (!dataSource) return null;
+
+  const renderCell = (field, index) => {
+    return isEditing ? (
+      <input
+        type="text"
+        value={editData.contatos[index][field]}
+        onChange={(e) => handleInputChange(e, index, 'contatos', field)}
+      />
+    ) : (
+      dataSource[index][field]
     );
   };
 
-  const renderCargosDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.cargos) return null;
-  
-    return (
-      <Table responsive bordered className="cargos-details-table mb-4">
-        <tbody>
-          {detalhesInstituicao.cargos.map((cargo, index) => (
-            <React.Fragment key={index}>
-              
-              <tr>
-              <td className="detail-cell">Cargo</td>
-              <td className="detail-cell">{cargo.cargo}</td>
+  return (
+    <Table responsive bordered className="contatos-details-table mb-4">
+      <tbody>
+        {dataSource.map((contato, index) => (
+          <React.Fragment key={index}>
+            <tr>
+              <td className="detail-cell">Categoria</td>
+              <td className="detail-cell">{renderCell('categoria', index)}</td>
             </tr>
             <tr>
-              <td className="detail-cell">Instituição</td>
-              <td className="detail-cell">{cargo.instituicaoNome}</td>
+              <td className="detail-cell">Categoria Específica</td>
+              <td className="detail-cell">{renderCell('categoriaEspecifica', index)}</td>
             </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
+            <tr>
+              <td className="detail-cell">Nome Completo</td>
+              <td className="detail-cell">{renderCell('nomeCompleto', index)}</td>
+            </tr>
+            <tr>
+              <td className="detail-cell">Telefone</td>
+              <td className="detail-cell">{renderCell('telefone', index)}</td>
+            </tr>
+        
+          </React.Fragment>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
+
+
+  
+const renderSetoresDetails = () => {
+  
+
+  const dataSource = isEditing ? editData.setores : detalhesInstituicao?.setores;
+
+  if (!dataSource) return null;
+
+  const setores = isEditing ? editData.setores : detalhesInstituicao.setores;
+  if (!setores) return null;
+
+  return (
+    <Table responsive bordered className="setores-details-table mb-4">
+      <tbody>
+        {dataSource.map((setor, index) => (
+          <React.Fragment key={index}>
+            {renderCell('Setor', 'setor', setor, index, 'setores')}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
+  
+const renderUnidadesDetails = () => {
+  // Seleciona a fonte de dados com base no modo de edição
+  const dataSource = isEditing ? editData.unidades : detalhesInstituicao?.unidades;
+
+  // Retorna null se a fonte de dados estiver vazia
+  if (!dataSource) return null;
+
+  // Função para renderizar uma célula, permitindo edição se estiver no modo de edição
+  const renderCell = (field, index) => {
+    return isEditing ? (
+      <input
+        type="text"
+        value={editData.unidades[index][field]}
+        onChange={(e) => handleInputChange(e, index, 'unidades', field)}
+      />
+    ) : (
+      dataSource[index][field]
     );
   };
-  
-  
-  
-  const renderContatosDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.contatos) return null;
-  
-    return (
-      <Table responsive bordered className="contatos-details-table mb-4">
-        <tbody>
-          {detalhesInstituicao.contatos.map((contato, index) => (
-            <React.Fragment key={index}>
-             
-              <tr>
-                <td className="detail-cell">Categoria</td>
-                <td className="detail-cell">{contato.categoria}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">  Categoria Específica</td>
-                <td className="detail-cell">{contato.categoriaEspecifica}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Nome Completo</td>
-                <td className="detail-cell">{contato.nomeCompleto}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Telefone</td>
-                <td className="detail-cell">{contato.telefone}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Instituição</td>
-                <td className="detail-cell">{contato.instituicaoNome}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
-  
-  const renderSetoresDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.setores) return null;
-  
-    return (
-      <Table responsive bordered className="setores-details-table mb-4">
-        <tbody>
-          {detalhesInstituicao.setores.map((setor, index) => (
-            <React.Fragment key={index}>
-              <tr>
-                <td className="detail-cell">Setor</td>
-                <td className="detail-cell">{setor.setor}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Instituição</td>
-                <td className="detail-cell">{setor.instituicaoNome}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
-  
-  const renderUnidadesDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.unidades) return null;
-  
-    return (
-      <Table responsive bordered className="unidades-details-table mb-4">
-        <tbody>
-          {detalhesInstituicao.unidades.map((unidade, index) => (
-            <React.Fragment key={index}>
+
+  // Renderiza a tabela de unidades
+  return (
+    <Table responsive bordered className="unidades-details-table mb-4">
+      <tbody>
+        {dataSource.map((unidade, index) => (
+          <React.Fragment key={index}>
+            <tr>
+              <td className="detail-cell">Unidade</td>
+              <td className="detail-cell">{renderCell('unidade', index)}</td>
+            </tr>
+          
+          </React.Fragment>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
+
+const renderUsuariosDetails = () => {
+
+  const dataSource = isEditing ? editData.usuarios : detalhesInstituicao?.usuarios;
+
+  if (!dataSource) return null;
+
+  const usuarios = isEditing ? editData.usuarios : detalhesInstituicao.usuarios;
+  if (!usuarios) return null;
+
+  return (
+    <Table responsive bordered className="usuarios-details-table mb-4">
+      <tbody>
+        {dataSource.map((usuario, index) => (
+          <React.Fragment key={index}>
+            {renderCell('Nome', 'nome', usuario, index, 'usuarios')}
+            {renderCell('Identificador', 'identificador', usuario, index, 'usuarios')}
+            {renderCell('Senha', 'senha', usuario, index, 'usuarios')}
+            {renderCell('Acesso', 'acesso', usuario, index, 'usuarios')}
             
-              <tr>
-                <td className="detail-cell">Unidade</td>
-                <td className="detail-cell">{unidade.unidade}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Instituição</td>
-                <td className="detail-cell">{unidade.instituicaoNome}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
-  
-  const renderUsuariosDetails = () => {
-    if (!detalhesInstituicao || !detalhesInstituicao.usuarios) return null;
-  
-    return (
-      <Table responsive bordered className="usuarios-details-table mb-4">
-        <tbody>
-          {detalhesInstituicao.usuarios.map((usuario, index) => (
-            <React.Fragment key={index}>
-              
-              <tr>
-                <td className="detail-cell">Nome</td>
-                <td className="detail-cell">{usuario.nome}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Identificador</td>
-                <td className="detail-cell">{usuario.identificador}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Senha</td>
-                <td className="detail-cell">{usuario.senha}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Acesso</td>
-                <td className="detail-cell">{usuario.acesso}</td>
-              </tr>
-              <tr>
-                <td className="detail-cell">Instituição</td>
-                <td className="detail-cell">{usuario.instituicaoNome}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
-  
+          </React.Fragment>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
   
   // Pagination logic
   const totalPages = Math.ceil(instituicoes.length / itemsPerPage);
@@ -351,7 +391,11 @@ const handleDeleteInstituicao = async (id) => {
       {selectedInstituicao && (
         <div>
           <div className="action-buttons">
+          {isEditing ? (
+            <button onClick={handleCancel}>Cancelar</button>
+          ) : (
             <button onClick={handleEdit} disabled={isEditing}>Editar</button>
+          )}
             <button onClick={handleSave} disabled={!isEditing}>Salvar</button>
             <button onClick={() => handleDeleteInstituicao(selectedInstituicao.id)}>Excluir Instituição</button>
 
