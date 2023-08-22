@@ -105,25 +105,35 @@ const NRs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Impede o comportamento padrão de recarregar a página
-
+  
     // Envia os dados para o servidor
     axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/register', formData)
       .then(response => {
-        console.log(response.data); 
-        setNotification({
-          type: 'success',
-          message: 'Sucesso ao cadastrar Novo Usuário',
-        });
-  
+        if (response.data.success) {
+          // Mostra a notificação de sucesso se o usuário for criado com êxito
+          setNotification({
+            type: 'success',
+            message: 'Sucesso ao cadastrar Novo Usuário',
+          });
+        } else {
+          // Mostra a notificação de erro com a mensagem retornada pelo servidor
+          // (por exemplo, "Usuario (Email de acesso) já existente na sua Instituição.")
+          setNotification({
+            type: 'danger',
+            message: response.data.message,
+          });
+        }
       })
       .catch(error => {
-        console.log(error); 
+        console.log(error);
+        // Mostra a notificação de erro genérica se houver uma falha na solicitação
         setNotification({
           type: 'danger',
           message: 'Falha ao cadastrar Novo Usuário',
         });
       });
   };
+  
 
 
   return (

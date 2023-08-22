@@ -3,6 +3,8 @@ import { Container, Form, Button, Card, Alert, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'; // Importe o useHistory
 import styles from './Login.css'; // Importando o arquivo CSS
+import NotificationAlert from "react-notification-alert"; // Import the notification component
+
 const Login = () => {
   // Applying background image to the body
   useEffect(() => {
@@ -21,7 +23,19 @@ const Login = () => {
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
   const history = useHistory(); // Utilize o hook useHistory
+  const notificationAlertRef = React.useRef(null); // Reference for notification
 
+   // Function to show notification
+  const notify = (message, type) => {
+    const options = {
+      place: "tr",
+      message: message,
+      type: type,
+      icon: "nc-icon nc-bell-55",
+      autoDismiss: 7,
+    };
+    notificationAlertRef.current.notificationAlert(options);
+  };
   const handleLogin = (e) => {
     e.preventDefault();
   
@@ -32,6 +46,9 @@ const Login = () => {
       })
       .then((response) => {
         if (response.data.success) {
+          
+          notify("Credenciais Corretas!", "success"); // Notify success
+          
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('username', response.data.username);
           localStorage.setItem('instituicaoNome', response.data.institution);
@@ -51,14 +68,23 @@ const Login = () => {
   
           history.push("/usuario/painel-usuarios");
         } else {
-          setError('Falha na autenticação');
+          
+          notify("Credenciais Incorretas!", "danger"); // Notify failure
+    
+        }
+      })
+      .catch(error => {
+        if (error.response && (error.response.status === 404 || error.response.status === 401)) {
+          notify("Credenciais Incorretas!", "danger"); // Notify failure for 404 or 401 errors
+        } else {
+          console.error('An unexpected error occurred:', error);
         }
       });
   };
   
   
   return (
-
+    <div><NotificationAlert ref={notificationAlertRef} />
     <Container className="login-container" style={{ height: '100vh', marginTop: '200px'}}>
       <Col md={{ span: 6, offset: 3 }}>
         <Card>
@@ -84,6 +110,7 @@ const Login = () => {
         </Card>
       </Col>
     </Container>
+    </div>
   );
 };
 

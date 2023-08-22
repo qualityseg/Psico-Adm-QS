@@ -326,31 +326,36 @@ const NovaInstituicao = () => {
       usuarios: usuarios,
     };
   
-    // Send a POST request to the server
-    try {
-      const response = await fetch('https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
+    // Envio da solicitação POST para o servidor
+  try {
+    const response = await fetch('https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataToSend),
+    });
+
+    const responseMessage = await response.text(); // Leitura da mensagem da resposta
+
+    if (response.ok) {
+      setNotification({
+        type: 'success',
+        message: 'Instituição registrada com sucesso!',
       });
-  
-      if (response.ok) {
-        setNotification({
-          type: 'success',
-          message: 'Instituição registrada com sucesso!',
-        });
-      } else {
-        throw new Error('Erro ao enviar os dados para o servidor');
-      }
-    } catch (error) {
+    } else {
+      // Mostra a mensagem de erro retornada pelo servidor
       setNotification({
         type: 'danger',
-        message: 'Erro ao enviar os dados para o servidor',
+        message: responseMessage, // Incluirá a mensagem "Erro ao cadastrar Instituição, já existe uma instituição com esse CNPJ."
       });
-      console.error('Erro ao enviar os dados para o servidor:', error);
     }
-  };
-  
+  } catch (error) {
+    setNotification({
+      type: 'danger',
+      message: 'Erro ao enviar os dados para o servidor',
+    });
+    console.error('Erro ao enviar os dados para o servidor:', error);
+  }
+};
   
 
   return (

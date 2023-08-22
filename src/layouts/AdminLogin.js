@@ -2,10 +2,24 @@ import React, { useState } from "react";
 import axios from 'axios';
 import styles from './Login.module.css';
 import icon from './icone.png';
+import NotificationAlert from "react-notification-alert"; // Import the notification component
 
 const Login = (props) => {
   const [identificador, setIdentificador] = useState(""); // Mudança aqui
   const [senha, setSenha] = useState("");
+  const notificationAlertRef = React.useRef(null); // Reference for notification
+
+  // Function to show notification
+  const notify = (message, type) => {
+    const options = {
+      place: "tr",
+      message: message,
+      type: type,
+      icon: "nc-icon nc-bell-55",
+      autoDismiss: 7,
+    };
+    notificationAlertRef.current.notificationAlert(options);
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -14,6 +28,7 @@ const Login = (props) => {
         console.log('Response from server:', response.data); // Log the response from the server
 
         if (response.data.success) {
+          notify("Credenciais Corretas!", "success");
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('username', identificador); // Mudança aqui
           localStorage.setItem('instituicaoNome', response.data.instituicaoNome);
@@ -23,13 +38,25 @@ const Login = (props) => {
 
           props.history.push('/admin/dashboard');
         } else {
-          alert('Login falhou');
+          
+          notify("Credenciais Incorretas!", "danger"); // Notify failure
+       
+        
+        }
+      })
+      .catch(error => {
+        if (error.response && (error.response.status === 404 || error.response.status === 401)) {
+          notify("Credenciais Incorretas!", "danger"); // Notify failure for 404 or 401 errors
+        } else {
+          console.error('An unexpected error occurred:', error);
         }
       });
   };
 
   return (
-    
+    <div>
+    <NotificationAlert ref={notificationAlertRef} /> 
+     
     <div className={styles.container} style={{ backgroundImage: 'url(https://imgur.com/9fb4848.png)', backgroundSize: 'cover', Height: '100vh' }}>
       <div className={styles.content}>
         <div className={styles.title}>
@@ -44,6 +71,7 @@ const Login = (props) => {
           <button type="submit" className={styles.button}>Login</button>
         </form>
       </div>
+    </div>
     </div>
     
   );

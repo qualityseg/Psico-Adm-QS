@@ -9,7 +9,61 @@ const GerenciamentoInstituicoes = () => {
   const [detalhesInstituicao, setDetalhesInstituicao] = useState(null); // State for institution details
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [isEditing, setIsEditing] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [editData, setEditData] = useState(null);
 
+
+  const handleEdit = (index) => {
+    const instituicaoToEdit = instituicoes[index];
+    setEditData(instituicaoToEdit);
+    setIsEditing(true);
+  };
+  
+  
+  
+  const handleSave = async (index) => {
+  const instituicaoToUpdate = editData; // Dados editados
+
+  try {
+    const response = await axios.put(`https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes/${instituicaoToUpdate.id}`, instituicaoToUpdate);
+    if (response.status === 200) {
+      // Atualizar a lista de instituições com os novos dados
+      const updatedInstituicoes = [...instituicoes];
+      updatedInstituicoes[index] = instituicaoToUpdate;
+      setInstituicoes(updatedInstituicoes);
+      setNotification({ type: 'success', message: 'Instituição atualizada com sucesso!' });
+    }
+  } catch (error) {
+    console.error(error);
+    setNotification({ type: 'danger', message: 'Erro ao atualizar a instituição' });
+  }
+};
+
+  
+const handleDeleteInstituicao = async (id) => {
+  try {
+    const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes/${id}`);
+    if (response.status === 200) {
+      // Remover a instituição excluída da lista usando o ID
+      const updatedInstituicoes = instituicoes.filter(instituicao => instituicao.id !== id);
+      setInstituicoes(updatedInstituicoes);
+      setNotification({ type: 'success', message: 'Instituição excluída com sucesso!' });
+      console.log('Instituição excluída com sucesso!'); // Log de verificação
+    }
+  } catch (error) {
+    console.error(error);
+    setNotification({ type: 'danger', message: 'Erro ao excluir a instituição' });
+  }
+};
+
+
+
+  
+  
+  
+  
+  
   useEffect(() => {
     carregarInstituicoes();
   }, []);
@@ -296,6 +350,14 @@ const GerenciamentoInstituicoes = () => {
       </div>
       {selectedInstituicao && (
         <div>
+          <div className="action-buttons">
+            <button onClick={handleEdit} disabled={isEditing}>Editar</button>
+            <button onClick={handleSave} disabled={!isEditing}>Salvar</button>
+            <button onClick={() => handleDeleteInstituicao(selectedInstituicao.id)}>Excluir Instituição</button>
+
+
+
+          </div>
           <h2>Detalhes da Instituição: {selectedInstituicao.instituicao}</h2>
         {renderInstituicaoDetails()}
         <h1>Contatos</h1>
@@ -308,6 +370,8 @@ const GerenciamentoInstituicoes = () => {
         {renderCargosDetails()}
         <h1>Usuários</h1>
         {renderUsuariosDetails()}
+        
+
         </div>
       )}
     </Container>
