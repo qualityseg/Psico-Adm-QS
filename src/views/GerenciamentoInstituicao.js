@@ -61,7 +61,7 @@ const GerenciamentoInstituicoes = () => {
     try {
       // Example structure of the data to save
       const dataToSave = {
-        instituicoes: [editData.instituicoes], // Ensure it's an array
+        instituicoes: editData.instituicoes, // Ensure it's an array
         cargos: editData.cargos,
         contatos: editData.contatos,
         setores: editData.setores,
