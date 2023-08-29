@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const PrimeiroAcesso = () => {
   
-  // Applying background image to the body
+  // Applying background image to the bodykkkk
   document.body.style.backgroundImage = "url('https://imgur.com/CrlSHBe.png')";
   document.body.style.backgroundSize = 'cover';
   document.body.style.height = '100vh';
