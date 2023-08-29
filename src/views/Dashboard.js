@@ -7,18 +7,21 @@ const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
-    const getUserCount = async () => {
-      try {
-        const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/usercount');
+    // Recuperar o nome da instituição do localStorage
+    const institutionName = localStorage.getItem('instituicaoNome');
+    
+    // Fazer uma chamada de API para obter a contagem de usuários por instituição
+    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/api/UserCountByInstitution?instituicaoNome=${institutionName}`)
+      .then(response => {
+        // Atualizar o estado com a contagem de usuários
         setUserCount(response.data.count);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getUserCount();
+      })
+      .catch(error => {
+        console.error('Erro ao buscar a contagem de usuários:', error);
+      });
   }, []);
 
+  
   return (
     <Container fluid>
       <Row className="mb-4 d-flex justify-content-center"> {/* Aqui foi adicionado as classes 'd-flex' e 'justify-content-center' */}

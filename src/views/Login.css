@@ -2,3 +2,44 @@
 .login-container {
   margin-top: 150px;
 }
+
+/* Centralizing text for labels and clickable text */
+.label-text,
+.clickable-text {
+  text-align: center;
+  display: block;
+}
+
+/* Styling the clickable text 'Primeiro acesso' */
+.clickable-text {
+  color: #85BB32;
+}
+
+/* Styling and resizing the login button */
+.login-button {
+  background-color: #85BB32;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px auto;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+/* Changing the color when the button is hovered */
+.login-button:hover {
+  background-color: #2C3E10 !important;
+}
+
+/* Changing the color when the button is clicked */
+.login-button:active {
+  background-color: #2C3E10 !important;
+}
+
+/* Additional custom styles can go here */
+

@@ -22,7 +22,7 @@ const dashboardRoutes = [
     name: "Gerenciar Instituição",
     component: GerenciamentoInstituicao, // Import this at the top of the file
     layout: "/admin",
-    roles: ['Administrador', 'Dev'],
+    roles: [ 'Dev'],
   },
   
   {

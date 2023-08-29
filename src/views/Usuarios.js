@@ -20,13 +20,15 @@ const NR3 = () => {
   
   const carregarUsuarios = async () => {
     try {
-        const response = await axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/usuarios');
-        setUsuarios(response.data || []); // garanta que é um array
+      const instituicaoNome = localStorage.getItem('instituicaoNome'); // Substitua pela chave correta se necessário
+      const url = `https://fair-ruby-caterpillar-wig.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`;
+      
+      const response = await axios.get(url);
+      setUsuarios(response.data || []); // garanta que é um array
     } catch (error) {
-        console.error("Error fetching users:", error);
+      console.error("Error fetching users:", error);
     }
-};
-
+  };
   
 
 
@@ -45,8 +47,8 @@ const NR3 = () => {
 
   // Filtragem de usuários
   const filteredUsuarios = (usuarios || []).filter(usuario => 
-    usuario.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    usuario.email.toLowerCase().includes(searchTerm.toLowerCase())
+    usuario.Nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    usuario.Email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Renderização do componente
@@ -93,7 +95,7 @@ const NR3 = () => {
                     <td>
                       {usuario.access.includes('Visualizador') && (
                         <img
-                          src="https://imgur.com/DBuYzVJ.png" alt="Visualizador" style={{ width: '24px', height: '24px', marginRight: '5px' }} title="Cliente"/>
+                          src="https://imgur.com/gu41gtn.png" alt="Paciente" style={{ width: '24px', height: '24px', marginRight: '5px' }} title="Paciente"/>
                           )}
                       {usuario.access.includes('Admin') && (
                         <img

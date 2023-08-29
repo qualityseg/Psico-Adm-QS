@@ -57,13 +57,15 @@ const Login = (props) => {
     <div>
     <NotificationAlert ref={notificationAlertRef} /> 
      
-    <div className={styles.container} style={{ backgroundImage: 'url(https://imgur.com/9fb4848.png)', backgroundSize: 'cover', Height: '100vh' }}>
+    <div className={styles.container} style={{ backgroundImage: 'url(https://imgur.com/CrlSHBe.png.png)', backgroundSize: 'cover', Height: '100vh' }}>
       <div className={styles.content}>
         <div className={styles.title}>
-          
+        <img src="https://imgur.com/qwGDNx6.png" style={{ width: '100%', height: 'auto', marginBottom: '5px' }} alt="logo" />
+        <hr style={{ borderTop: '1px solid #ccc', marginBottom: '20px' }} />
           <div className={styles.text}>
             LifeMed | Painel Administrativo
           </div>
+          <div style={{ height: '20px' }}></div>
         </div>
         <form onSubmit={handleLogin} className={styles.form}>
           <input type="text" value={identificador} onChange={(e) => setIdentificador(e.target.value)} placeholder="E-Mail Identificador" className={styles.input}/> {/* Mudança aqui */}

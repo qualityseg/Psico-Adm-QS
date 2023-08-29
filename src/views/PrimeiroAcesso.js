@@ -5,7 +5,7 @@ import axios from 'axios';
 const PrimeiroAcesso = () => {
   
   // Applying background image to the body
-  document.body.style.backgroundImage = "url('https://imgur.com/9fb4848.png')";
+  document.body.style.backgroundImage = "url('https://imgur.com/CrlSHBe.png')";
   document.body.style.backgroundSize = 'cover';
   document.body.style.height = '100vh';
 
@@ -44,22 +44,26 @@ const PrimeiroAcesso = () => {
   return (
   
     <Container className="mt-5" >
-      <Col md={{ span: 6, offset: 3 }} style={{ marginTop: '150px' }}>
+      <Col md={{ span: 6, offset: 3 }} style={{ marginTop: '50px' }}>
         <Card>
           <Card.Body>
-            <Card.Title>{!verified ? 'Verificação de Usuário' : 'Cadastro de Senha'}</Card.Title>
+           <img src="https://imgur.com/qwGDNx6.png" style={{ width: '100%', height: 'auto', marginBottom: '5px' }} alt="logo" />
+           <hr style={{ borderTop: '1px solid #ccc', marginBottom: '20px' }} />
+           
+            <Card.Title as="h5" className="text-center">{!verified ? 'Primeiro Acesso' : 'Cadastro de Senha'}</Card.Title>
+            <div style={{ height: '20px' }}></div>
             <Form>
               {!verified ? (
                 <>
                   <Form.Group>
-                    <Form.Label>Nome</Form.Label>
+                    <Form.Label className="label-text">Nome</Form.Label>
                     <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label className="label-text">Email</Form.Label>
                     <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                   </Form.Group>
-                  <Button style={{ backgroundColor: '#85BB32' }} onClick={verifyUser}>Verificar</Button>
+                  <Button className="login-button w-100" type="submit" style={{ backgroundColor: '#85BB32' }} onClick={verifyUser}>Verificar</Button>
                 </>
               ) : (
                 <>

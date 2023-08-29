@@ -17,10 +17,10 @@ const NR2 = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = usuarios.slice(indexOfFirstItem, indexOfLastItem);
 
-  const columns = [
-    'name', 'surname', 'email', 'birthDate', 'gender', 'phone', 'phone2', 'cpf', 'cnpj',
-    'registration', 'obs', 'address', 'number', 'complement', 'district', 'city', 'state',
-    'country', 'zipCode', 'unit', 'sector', 'role', 'institution', 'accessRecovery', 'access'
+const columns = [
+    'Nome', 'Sobrenome', 'Email', 'Data_de_Nascimento', 'Genero', 'Telefone', 'Telefone2', 'CPF', 'CNPJ',
+    'Matricula', 'Observacoes', 'Endereco', 'Numero', 'Complemento', 'Bairro', 'Cidade', 'Estado',
+    'Pais', 'CEP', 'Unidade', 'Setor', 'Cargo', 'Instituicao', 'Recuperacao_de_Acesso', 'Acesso'
   ];
 
 
@@ -104,7 +104,7 @@ const NR2 = () => {
         <tbody>
           {currentItems.map((usuario, index) => (
             <tr key={index} onClick={() => handleUserSelection(indexOfFirstItem + index)} className="clickable-row">
-              <td>{usuario.name}</td>
+              <td>{usuario.Nome}</td>
             </tr>
           ))}
         </tbody>
@@ -144,13 +144,13 @@ const NR2 = () => {
             </Table>
             {editIndex === selectedUser ? (
               <div>
-                <Button variant="success" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={handleSave}>Save</Button>
-                <Button variant="warning" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={handleCancel}>Cancel</Button>
+                <Button variant="success" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={handleSave}>Salvar</Button>
+                <Button variant="warning" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={handleCancel}>Cancelar</Button>
               </div>
             ) : (
               <div>
-                <Button variant="primary" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleEdit(selectedUser)}>Edit</Button>
-                <Button variant="danger" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleDelete(usuarios[selectedUser].id)}>Delete</Button>
+                <Button variant="primary" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleEdit(selectedUser)}>Editar</Button>
+                <Button variant="danger" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleDelete(usuarios[selectedUser].id)}>Deletar</Button>
               </div>
             )}
           </Col>

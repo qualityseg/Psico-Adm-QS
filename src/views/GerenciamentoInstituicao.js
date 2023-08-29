@@ -59,55 +59,70 @@ const GerenciamentoInstituicoes = () => {
   
   const handleSave = async () => {
     try {
-      // Example structure of the data to save
+      // Prepare dataToSave based on the current state or editData
       const dataToSave = {
-        instituicoes: editData.instituicoes, // Ensure it's an array
+        instituicoes: editData.instituicoes,
         cargos: editData.cargos,
         contatos: editData.contatos,
         setores: editData.setores,
         unidades: editData.unidades,
         usuarios: editData.usuarios,
       };
+      
       console.log('Data to send:', dataToSave);
-      // Sending a POST request to the server
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/salvar-instituicao', dataToSave);
+      const response = await axios.post(
+        'https://fair-ruby-caterpillar-wig.cyclic.app/salvar-instituicao',
+        dataToSave,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
   
-      // Handle the response...
+      if (response.status === 200 && response.data.success) {
+        // Update the state as needed
+        // E.g., setInstituicoes(updatedInstituicoes);
+        // Exit edit mode
+        setIsEditing(false);
+        // Show success message
+        setNotification({ type: 'success', message: 'Alterações salvas com sucesso!' });
+      } else {
+        // Handle failure
+        setNotification({ type: 'danger', message: 'Erro ao salvar as alterações.' });
+      }
     } catch (error) {
-      // Handle error...
+      console.error('Erro ao salvar as alterações:', error);
+      setNotification({ type: 'danger', message: 'Erro ao salvar as alterações.' });
     }
   };
   
   
   
   
-const handleDeleteInstituicao = async (id) => {
-  try {
-    const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes/${id}`);
-    if (response.status === 200) {
-      // Remover a instituição excluída da lista usando o ID
-      const updatedInstituicoes = instituicoes.filter(instituicao => instituicao.id !== id);
-      setInstituicoes(updatedInstituicoes);
-      setNotification({ type: 'success', message: 'Instituição excluída com sucesso!' });
-      console.log('Instituição excluída com sucesso!'); // Log de verificação
-    }
-  } catch (error) {
-    console.error(error);
-    setNotification({ type: 'danger', message: 'Erro ao excluir a instituição' });
-  }
-};
   
-const handleInputChange = (e, field, section) => {
-  const newEditData = { ...editData };
-  const newValue = e.target.value;
+  const handleDeleteInstituicao = async (id) => {
+    try {
+      const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes/${id}`);
+      if (response.status === 200) {
+        // Remover a instituição excluída da lista usando o ID
+        const updatedInstituicoes = instituicoes.filter(instituicao => instituicao.id !== id);
+        setInstituicoes(updatedInstituicoes);
+        setNotification({ type: 'success', message: 'Instituição excluída com sucesso!' });
+        console.log('Instituição excluída com sucesso!'); // Log de verificação
+      }
+    } catch (error) {
+      console.error(error);
+      setNotification({ type: 'danger', message: 'Erro ao excluir a instituição' });
+    }
+  };
+    
+  const handleInputChange = (e, index, category, field) => {
+    const newValue = e.target.value;
+    setEditData((prevData) => {
+      const updatedCategoryData = [...prevData[category]];
+      updatedCategoryData[index][field] = newValue;
+      return { ...prevData, [category]: updatedCategoryData };
+    });
+  };
 
-  // Update the specific field within the section
-  if (newEditData[section] && newEditData[section][0]) {
-    newEditData[section][0][field] = newValue;
-  }
 
-  setEditData(newEditData);
-};
 
   useEffect(() => {
     carregarInstituicoes();
@@ -201,35 +216,30 @@ const renderInstituicaoDetails = () => {
 const renderCargosDetails = () => {
   if (!detalhesInstituicao || !detalhesInstituicao.cargos) return null;
 
-  const renderCell = (value, fieldName, index) => {
-    if (isEditing) {
-      return (
-        <input
-          type="text"
-          value={editData.cargos[index][fieldName]}
-          onChange={(e) => handleCargoChange(e, fieldName, index)}
-        />
-      );
-    }
-    return value;
-  };
-
   return (
     <Table responsive bordered className="cargos-details-table mb-4">
       <tbody>
         {detalhesInstituicao.cargos.map((cargo, index) => (
-          <React.Fragment key={index}>
-            <tr>
-              <td className="detail-cell">Cargo</td>
-              <td className="detail-cell">{renderCell(cargo.cargo, 'cargo', index)}</td>
-            </tr>
-           
-          </React.Fragment>
+          <tr key={index}>
+            <td className="detail-cell">Cargo</td>
+            <td className="detail-cell">
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editData.cargos[index]['cargo'] || ''}
+                  onChange={(e) => handleInputChange(e, index, 'cargos', 'cargo')}
+                />
+              ) : (
+                cargo['cargo']
+              )}
+            </td>
+          </tr>
         ))}
       </tbody>
     </Table>
   );
 };
+
 
 // Função para lidar com a alteração dos campos de cargos
 const handleCargoChange = (e, fieldName, index) => {
