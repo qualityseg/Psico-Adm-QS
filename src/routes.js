@@ -86,6 +86,7 @@ const dashboardRoutes = [
     ]
   },
   {
+    
     name: "Programas",
     icon: "nc-icon nc-align-left-2",
     layout: "/admin",
@@ -93,8 +94,8 @@ const dashboardRoutes = [
     subMenu: [
       {
         
-        path: "/TodosProgramas",
-        name: "Todos os Programas",
+        path: "/GerenciamentoDeAvaliacoes",
+        name: "Painel de Avaliações",
         component: NR5,
         layout: "/admin",
         roles: ['Administrador', 'Dev'],

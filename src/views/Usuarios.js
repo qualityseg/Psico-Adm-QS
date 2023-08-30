@@ -29,8 +29,6 @@ const NR3 = () => {
       console.error("Error fetching users:", error);
     }
   };
-  
-
 
   // Funções de manipulação de eventos
   const handleEdit = (id) => {
@@ -90,21 +88,21 @@ const NR3 = () => {
               <tbody>
                 {filteredUsuarios.map(usuario => (
                   <tr key={usuario.id}>
-                    <td>{usuario.name}</td>
-                    <td>{usuario.email}</td>
+                    <td>{usuario.Nome}</td>
+                    <td>{usuario.Email}</td>
                     <td>
-                      {usuario.access.includes('Visualizador') && (
+                      {usuario.Acesso && usuario.Acesso.includes('Paciente') && (
                         <img
                           src="https://imgur.com/gu41gtn.png" alt="Paciente" style={{ width: '24px', height: '24px', marginRight: '5px' }} title="Paciente"/>
-                          )}
-                      {usuario.access.includes('Admin') && (
+                      )}
+                      {usuario.Acesso && usuario.Acesso.includes('Admin') && (
                         <img
                           src="https://imgur.com/42Dk9YN.png" alt="Administrador" style={{ width: '24px', height: '24px', marginRight: '5px' }} title="Administrador"/>
-                          )}
-                      {usuario.access.includes('Médico') && (
+                      )}
+                      {usuario.Acesso && usuario.Acesso.includes('Medico') && (
                         <img
                           src="https://imgur.com/Pa2cWcB.png" alt="Medico" style={{ width: '24px', height: '24px', marginRight: '5px' }} title="Médico"/>
-                          )}
+                      )}
                     </td>
                     <td className="text-center">
                       <Button variant="light" onClick={() => handleEdit(usuario.id)}>

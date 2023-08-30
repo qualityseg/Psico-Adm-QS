@@ -9,37 +9,47 @@ const PrimeiroAcesso = () => {
   document.body.style.backgroundSize = 'cover';
   document.body.style.height = '100vh';
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [Nome, setName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Senha, setSenha] = useState('');
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState('');
 
-  const verifyUser = async () => {
+  const verifyUser = async (event) => {
+    event.preventDefault();
     try {
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/verifyUser', { name, email });
+      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/verifyUser', { Nome, Email });
+      console.log("Resposta da API: ", response.data);  // Log para diagnóstico
+  
       if (response.data.success) {
+        console.log("Usuário verificado com sucesso. Atualizando estado 'verified'.");  // Log para diagnóstico
         setVerified(true);
       } else {
+        console.log("Falha na verificação do usuário.");  // Log para diagnóstico
         setError('Nome ou identificador incorretos');
       }
     } catch (error) {
+      console.log("Erro ao fazer a chamada da API: ", error);  // Log para diagnóstico
       setError('Erro ao verificar usuário');
     }
   };
+  
 
   const registerPassword = async () => {
     try {
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/registerPassword', { name, email, senha });
+      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/registerPassword', { Nome, Email, Senha });
       if (response.data.success) {
         window.location.href = '/UserLogin';
       } else {
         setError('Erro ao cadastrar senha');
       }
     } catch (error) {
+      console.log('Erro ao fazer a chamada da API: ', error);
       setError('Erro ao cadastrar senha');
     }
   };
+  
+  
 
   return (
   
@@ -57,11 +67,11 @@ const PrimeiroAcesso = () => {
                 <>
                   <Form.Group>
                     <Form.Label className="label-text">Nome</Form.Label>
-                    <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <Form.Control type="text" value={Nome} onChange={(e) => setName(e.target.value)} />
                   </Form.Group>
                   <Form.Group>
                     <Form.Label className="label-text">Email</Form.Label>
-                    <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Form.Control type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
                   </Form.Group>
                   <Button className="login-button w-100" type="submit" style={{ backgroundColor: '#85BB32' }} onClick={verifyUser}>Verificar</Button>
                 </>
@@ -69,9 +79,9 @@ const PrimeiroAcesso = () => {
                 <>
                   <Form.Group>
                     <Form.Label>Senha</Form.Label>
-                    <Form.Control type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                    <Form.Control type="password" value={Senha} onChange={(e) => setSenha(e.target.value)} />
                   </Form.Group>
-                  <Button  style={{ backgroundColor: '#85BB32' }} onClick={registerPassword}>Cadastrar senha</Button>
+                  <Button className="login-button w-100" style={{ backgroundColor: '#85BB32' }} onClick={registerPassword}>Cadastrar senha</Button>
                 </>
               )}
               {error && <Alert variant="danger" className="mt-3">{error}</Alert>}

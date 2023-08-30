@@ -4,7 +4,7 @@ import axios from 'axios';
 import './NovosUsuarios.scss';
 
 const NRs = () => {
-
+  
   const [formData, setFormData] = useState({
     Nome: '',
     Sobrenome: '',
@@ -105,6 +105,13 @@ const NRs = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Impede o comportamento padrão de recarregar a página
   
+    // Verificação de validação para o campo "Acesso"
+    if (!formData.Acesso || formData.Acesso === "Selecione..") {
+      setNotification({ type: 'danger', message: 'Selecione o acesso do usuário.' });
+      return;
+    }
+
+
     // Envia os dados para o servidor
     axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/register', formData)
       .then(response => {
@@ -288,11 +295,11 @@ const NRs = () => {
         </Card>
 
         {notification && (
-        <Alert variant={notification.type}>
-          {notification.message}
-        </Alert>
+          <Alert variant={notification.type}>
+            {notification.message}
+          </Alert>
         )}
-
+        
         <Button type="submit" variant="primary" className="mt-3" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }}>Salvar</Button>
       </Form>
     </Container>

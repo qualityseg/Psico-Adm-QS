@@ -41,7 +41,7 @@ const Login = () => {
   
     axios
       .post("https://fair-ruby-caterpillar-wig.cyclic.app/api/user/login", {
-        email: email,
+        Email: email,
         senha: senha,
       })
       .then((response) => {
