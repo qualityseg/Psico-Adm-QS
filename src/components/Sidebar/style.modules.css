@@ -9,11 +9,7 @@
   background-color: #f9f9f9;
 }
 
-/* Adicione uma animação de rotação ao ícone do menu ao passar o mouse */
-.nav-link:hover i {
-  transform: rotate(360deg);
-  transition: all 0.5s ease;
-}
+
 
 /* Adicione uma transição suave para os links do submenu */
 .submenu li a {
