@@ -11,6 +11,12 @@ const TodosProgramas = () => {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
+
+  const handleInputChange = (e, field) => {
+    setSelectedProgram({ ...selectedProgram, [field]: e.target.value });
+  };
+  
+
   const handleSave = async () => {
     try {
       const url = `https://fair-ruby-caterpillar-wig.cyclic.app/programas/${selectedProgram.id}`;
@@ -124,7 +130,7 @@ const TodosProgramas = () => {
       <Row>
         <Col md={12} className="form-col rounded">
           {/* Conteúdo da coluna "Editar Avaliações" */}
-          <h2>Editar Avaliações</h2>
+          <h4 className="text-bold">Editar Avaliações</h4>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -154,25 +160,31 @@ const TodosProgramas = () => {
                   <tr>
                     <td>
                       {isEditing ? (
-                        <input type="text" value={selectedProgram.nome_programa} />
+                        <input type="text" value={selectedProgram.nome_programa} onChange={(e) => handleInputChange(e, 'nome_programa')} />
                       ) : (
                         selectedProgram.nome_programa
                       )}
                     </td>
-                    <td>
+                    <td className="table-link-cell">
                       {isEditing ? (
-                        <input type="text" value={selectedProgram.link_form} />
+                        <input 
+                          type="text" 
+                          value={selectedProgram.link_form} 
+                          style={{width: '100%'}} 
+                          onChange={(e) => handleInputChange(e, 'link_form')}
+                        />
                       ) : (
                         selectedProgram.link_form
                       )}
                     </td>
-                  </tr>
+                                      </tr>
                 </tbody>
               </Table>
               {isEditing ? (
                 <>
                   <Button className="custom-btn" onClick={handleSave}>Salvar</Button>
-                  <Button onClick={() => setIsEditing(false)}>Cancelar</Button>
+                  <Button className="custom-btn" onClick={() => setIsEditing(false)}>Cancelar</Button>
+
                 </>
               ) : (
                 <>

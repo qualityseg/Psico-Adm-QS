@@ -93,9 +93,11 @@ const columns = [
 
   return (
     <Container fluid>
+      <Row>
+      <Col md={12} className="form-col rounded">
       <h1>Administração de Usuários para {localStorage.getItem('instituicaoNome')}</h1>
-      <p>Selecione o Usuário na tabela abaixo e vejas suas informações com opções de edição.</p>
-      <Table responsive bordered className="user-selection-table mb-4">
+      <p>Selecione o Usuário na tabela abaixo e vejas suas informações com opção de edição.</p>
+      <Table striped bordered hover className="user-selection-table mb-4">
         <thead>
           <tr>
             <th>Selecione um Usuário:</th>
@@ -118,11 +120,12 @@ const columns = [
           ))}
         </Pagination>
       </div>
-
+      </Col>
+      </Row>
       {selectedUser !== null && (
         <Row className="mb-4">
-          <Col>
-            <Table responsive bordered>
+          <Col md={12} className="form-col rounded">
+            <Table striped bordered hover>
               <tbody>
                 {columns.map((column, colIndex) => (
                   <tr key={colIndex}>

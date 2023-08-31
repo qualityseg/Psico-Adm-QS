@@ -27,7 +27,7 @@ class Footer extends Component {
             
             <p className="copyright text-center">
               © {new Date().getFullYear()}{" "}
-              <a>LifeMed </a>Back-End em desenvolvimento constante pela IA da #QSLib Versão 2.15.2
+              <a>LifeMed </a>Back-End em desenvolvimento constante pela IA da #QSLib Versão 2.50.3
             </p>
           </nav>
         </Container>
