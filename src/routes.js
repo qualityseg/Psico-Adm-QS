@@ -17,17 +17,11 @@ const dashboardRoutes = [
     layout: "/admin",
     roles: ['Administrador', 'Dev']
   },
-  {
-    path: "/GerenciarInstituicao",
-    name: "Gerenciar Instituição",
-    component: GerenciamentoInstituicao, // Import this at the top of the file
-    layout: "/admin",
-    roles: [ 'Dev'],
-  },
+  
   
   {
-    path: "/painel-usuarios",
-    name: "Painel de Usuário",
+    path: "/painel",
+    name: "Painel de Paciente",
     component: PainelUsuario,
     layout: "/usuario",
     icon: " nc-icon nc-badge",
@@ -82,6 +76,13 @@ const dashboardRoutes = [
         layout: "/admin",
         roles: ['Dev'],
       
+      },
+      {
+        path: "/GerenciarInstituicao",
+        name: "Gerenciar Instituição",
+        component: GerenciamentoInstituicao, // Import this at the top of the file
+        layout: "/admin",
+        roles: [ 'Dev'],
       },
     ]
   },

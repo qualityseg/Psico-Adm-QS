@@ -27,11 +27,11 @@ root.render(
     <Switch>
       <Route exact path="/" render={() => <Redirect to="/UserLogin" />} />
         <Route path="/admin" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/login" />} />
-        <Route path="/AdminLogin" render={(props) => <AdminLogin {...props} />} />
+        <Route path="/Painel" render={(props) => <AdminLogin {...props} />} />
         <Route path="/PrimeiroAcesso" render={(props) => <PrimeiroAcesso {...props} />} />
         <Route path="/usuario" render={(props) => isAuthenticated() ? <AdminLayout {...props} /> : <Redirect to="/UserLogin" />} />
-        <Route path="/UserLogin" render={(props) => <UserLogin {...props} />} />
-        <Redirect from="/" to="/UserLogin" />
+        <Route path="/Login" render={(props) => <UserLogin {...props} />} />
+        <Redirect from="/" to="/Login" />
     </Switch>
   </BrowserRouter>
 );
