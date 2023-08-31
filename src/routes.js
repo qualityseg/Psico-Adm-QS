@@ -11,7 +11,7 @@ const dashboardRoutes = [
   
   {
     path: "/dashboard",
-    name: "LifeMed",
+    name: "Painel Administrativo",
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
     layout: "/admin",
