@@ -66,7 +66,7 @@ const Login = () => {
             localStorage.removeItem('cpf');
           }, 3600000); // 1 hora
   
-          history.push("/usuario/painel-usuarios");
+          history.push("/usuario/painel");
         } else {
           
           notify("Credenciais Incorretas!", "danger"); // Notify failure

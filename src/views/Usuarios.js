@@ -80,7 +80,7 @@ const NR3 = () => {
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Usuário</th>
+                  <th>Email</th>
                   <th></th> {/* Nova coluna adicionada */}
                   <th>Ações</th>
                 </tr>

@@ -1,3 +1,10 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto; /* Permitir rolagem se o conteúdo for maior que a tela */
+}
+
 /* Adicione uma transição suave para os links do menu */
 .nav-link {
   transition: all 0.3s ease;
