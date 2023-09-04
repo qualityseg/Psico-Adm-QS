@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Container, Row, Col , Pagination} from 'react-bootstrap';
 import axios from 'axios';
 import './NR2.css'; 
+import NotificationAlert from "react-notification-alert";
 
 const NR2 = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [editData, setEditData] = useState({});
   const [selectedUser, setSelectedUser] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); // Added for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const notificationAlert = React.createRef(); // Added for pagination
   const itemsPerPage = 5; // Added for pagination
 
   // Pagination logic
@@ -51,12 +53,34 @@ const columns = [
     setEditData(usuarios[index]);
   };
 
-  const handleSave = () => {
+  const notify = (message, type) => {
+    if (notificationAlert.current) {
+      var options = {
+        place: "tr",
+        message: (
+          <div>
+            <div>{message}</div>
+          </div>
+        ),
+        type: type,
+        icon: "now-ui-icons ui-1_bell-53",
+        autoDismiss: 7,
+      };
+      notificationAlert.current.notificationAlert(options);
+    }
+  };
+  
+
+const handleSave = () => {
+  // ... (seu código para salvar o usuário)
+  
+  
     axios.put(`https://fair-ruby-caterpillar-wig.cyclic.app/cadastro_clientes/${editData.id}`, editData)
       .then(response => {
         console.log(response.data);
         setEditIndex(-1);
         carregarUsuarios();
+        notify("Usuário cadastrado com sucesso!", "success");
       })
       .catch(error => {
         console.log(error);
@@ -132,11 +156,18 @@ const columns = [
                     <th>{column}</th>
                     <td>
                       {editIndex === selectedUser ? (
-                        <Form.Control
-                          type="text"
-                          value={editData[column] || ''}
-                          onChange={e => handleChange(e, column)}
-                        />
+                        column === "Acesso" ? (
+    <Form.Control as="select" value={editData[column] || ''} onChange={e => handleChange(e, column)}>
+      <option value="Paciente">Paciente</option>
+      <option value="Médico">Médico</option>
+    </Form.Control>
+  ) : (
+    <Form.Control
+      type="text"
+      value={editData[column] || ''}
+      onChange={e => handleChange(e, column)}
+    />
+  )
                       ) : (
                         usuarios[selectedUser][column]
                       )}
@@ -154,11 +185,15 @@ const columns = [
               <div>
                 <Button variant="primary" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleEdit(selectedUser)}>Editar</Button>
                 <Button variant="danger" style={{ backgroundColor: "#85BB32", borderColor: "#85BB32" }} onClick={() => handleDelete(usuarios[selectedUser].id)}>Deletar</Button>
+        
               </div>
             )}
           </Col>
         </Row>
       )}
+      <div className="react-notification-alert-container">
+          <NotificationAlert ref={notificationAlert} />
+        </div>
     </Container>
   );
 };

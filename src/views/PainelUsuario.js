@@ -7,6 +7,10 @@ const PainelUsuario = () => {
   const instituicaoNome = localStorage.getItem('instituicaoNome');
   const username = localStorage.getItem('username');
 
+  const formatCPF = (cpf) => {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };
+
   useEffect(() => {
     axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
       .then((response) => {
@@ -24,10 +28,13 @@ const PainelUsuario = () => {
         {
           programas.map((programa) => {
             const cpfRaw = localStorage.getItem('cpf');
-            const cpf = cpfRaw.replace(/\D/g, ''); // Removendo pontos e traços
+            const cpfFormatted = formatCPF(cpfRaw.replace(/\D/g, ''));
             const birthDateRaw = localStorage.getItem('birthDate');
-            const birthDate = new Date(birthDateRaw).toLocaleDateString('pt-BR').replace(/\//g, '%2F');
-            const linkForm = `${programa.link_form}?nome=${username}&instituicao=${instituicaoNome}&data=${birthDate}&cpf=${cpf}`;
+            const dateObj = new Date(birthDateRaw);
+            dateObj.setUTCMinutes(dateObj.getUTCMinutes() + dateObj.getTimezoneOffset());
+            const birthDate = dateObj.toLocaleDateString('pt-BR').replace(/\//g, '%2F');
+            const linkForm = `${programa.link_form}?nome=${username}&instituicao=${instituicaoNome}&data=${birthDate}&cpf=${cpfFormatted}`;
+
 
             return (
               <Col key={programa.id} sm={6} md={4} lg={3} className="programa-coluna mb-3"> {/* Tamanho ajustado e espaçamento entre colunas */}
