@@ -12,6 +12,8 @@ const GerenciamentoInstituicoes = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [notification, setNotification] = useState(null);
   const [editData, setEditData] = useState(null);
+  const [selectedInstituicaoId, setSelectedInstituicaoId] = useState(null);
+
 
   const renderCell = (label, field, item, index, category) => {
     const value = isEditing ? editData[category][index][field] : item[field];
@@ -61,7 +63,7 @@ const GerenciamentoInstituicoes = () => {
     try {
       // Prepare dataToSave based on the current state or editData
       const dataToSave = {
-        instituicoes: editData.instituicoes,
+        instituicoes: [{ ...editData.instituicoes[0], id: selectedInstituicaoId }],
         cargos: editData.cargos,
         contatos: editData.contatos,
         setores: editData.setores,
@@ -167,9 +169,10 @@ const GerenciamentoInstituicoes = () => {
   const handleInstituicaoSelection = (index) => {
     const instituicaoSelecionada = instituicoes[index];
     setSelectedInstituicao(instituicaoSelecionada);
+    setSelectedInstituicaoId(instituicaoSelecionada.id);  // Certifique-se de que esta linha está definindo o ID corretamente.
     carregarDetalhesInstituicao(instituicaoSelecionada.id);
   };
-// Função para renderizar a tabela de detalhes da instituição
+  
 const renderInstituicaoDetails = () => {
   if (!detalhesInstituicao || !detalhesInstituicao.instituicoes) return null;
 
@@ -182,8 +185,8 @@ const renderInstituicaoDetails = () => {
           {isEditing ? (
             <input
               type="text"
-              value={value || ''} // Ensure that null values are treated as an empty string
-              onChange={(e) => handleInputChange(e, field, 'instituicoes')}
+              value={value || ''}
+              onChange={(e) => handleInputChange(e, 0, 'instituicoes', field)}
             />
           ) : (
             value
@@ -196,6 +199,7 @@ const renderInstituicaoDetails = () => {
   return (
     <Table responsive bordered className="instituicao-details-table mb-4">
       <tbody>
+        
         {renderCell('instituicao', 'Instituição')}
         {renderCell('cnpj', 'CNPJ')}
         {renderCell('razaoSocial', 'Razão Social')}
@@ -216,30 +220,38 @@ const renderInstituicaoDetails = () => {
 const renderCargosDetails = () => {
   if (!detalhesInstituicao || !detalhesInstituicao.cargos) return null;
 
+  const renderCell = (field, label, index) => {
+    const value = isEditing ? editData.cargos[index][field] : detalhesInstituicao.cargos[index][field];
+    return (
+      <tr>
+        <td className="detail-cell">{label}</td>
+        <td className="detail-cell">
+          {isEditing ? (
+            <input
+              type="text"
+              value={value || ''}
+              onChange={(e) => handleInputChange(e, index, 'cargos', field)}
+            />
+          ) : (
+            value
+          )}
+        </td>
+      </tr>
+    );
+  };
+
   return (
     <Table responsive bordered className="cargos-details-table mb-4">
       <tbody>
         {detalhesInstituicao.cargos.map((cargo, index) => (
-          <tr key={index}>
-            <td className="detail-cell">Cargo</td>
-            <td className="detail-cell">
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={editData.cargos[index]['cargo'] || ''}
-                  onChange={(e) => handleInputChange(e, index, 'cargos', 'cargo')}
-                />
-              ) : (
-                cargo['cargo']
-              )}
-            </td>
-          </tr>
+          <React.Fragment key={index}>
+            {renderCell('cargo', 'Cargo', index)}
+          </React.Fragment>
         ))}
       </tbody>
     </Table>
   );
 };
-
 
 // Função para lidar com a alteração dos campos de cargos
 const handleCargoChange = (e, fieldName, index) => {
@@ -248,10 +260,7 @@ const handleCargoChange = (e, fieldName, index) => {
   setEditData({ ...editData, cargos: newCargos });
 };
 
-
-  
 const renderContatosDetails = () => {
-  // Utilizando ?. para evitar erro se detalhesInstituicao for null ou undefined
   const dataSource = isEditing ? editData.contatos : detalhesInstituicao?.contatos;
 
   if (!dataSource) return null;
@@ -260,11 +269,11 @@ const renderContatosDetails = () => {
     return isEditing ? (
       <input
         type="text"
-        value={editData.contatos[index][field]}
+        value={editData.contatos[index][field] || ''}
         onChange={(e) => handleInputChange(e, index, 'contatos', field)}
       />
     ) : (
-      dataSource[index][field]
+      dataSource[index][field] || ''
     );
   };
 
@@ -289,7 +298,6 @@ const renderContatosDetails = () => {
               <td className="detail-cell">Telefone</td>
               <td className="detail-cell">{renderCell('telefone', index)}</td>
             </tr>
-        
           </React.Fragment>
         ))}
       </tbody>
@@ -301,21 +309,31 @@ const renderContatosDetails = () => {
 
   
 const renderSetoresDetails = () => {
-  
-
   const dataSource = isEditing ? editData.setores : detalhesInstituicao?.setores;
 
   if (!dataSource) return null;
 
-  const setores = isEditing ? editData.setores : detalhesInstituicao.setores;
-  if (!setores) return null;
+  const renderCell = (field, index) => {
+    return isEditing ? (
+      <input
+        type="text"
+        value={editData.setores[index][field] || ''}
+        onChange={(e) => handleInputChange(e, index, 'setores', field)}
+      />
+    ) : (
+      dataSource[index][field] || ''
+    );
+  };
 
   return (
     <Table responsive bordered className="setores-details-table mb-4">
       <tbody>
         {dataSource.map((setor, index) => (
           <React.Fragment key={index}>
-            {renderCell('Setor', 'setor', setor, index, 'setores')}
+            <tr>
+              <td className="detail-cell">Setor</td>
+              <td className="detail-cell">{renderCell('setor', index)}</td>
+            </tr>
           </React.Fragment>
         ))}
       </tbody>
@@ -325,26 +343,22 @@ const renderSetoresDetails = () => {
 
   
 const renderUnidadesDetails = () => {
-  // Seleciona a fonte de dados com base no modo de edição
   const dataSource = isEditing ? editData.unidades : detalhesInstituicao?.unidades;
 
-  // Retorna null se a fonte de dados estiver vazia
   if (!dataSource) return null;
 
-  // Função para renderizar uma célula, permitindo edição se estiver no modo de edição
   const renderCell = (field, index) => {
     return isEditing ? (
       <input
         type="text"
-        value={editData.unidades[index][field]}
+        value={editData.unidades[index][field] || ''}
         onChange={(e) => handleInputChange(e, index, 'unidades', field)}
       />
     ) : (
-      dataSource[index][field]
+      dataSource[index][field] || ''
     );
   };
 
-  // Renderiza a tabela de unidades
   return (
     <Table responsive bordered className="unidades-details-table mb-4">
       <tbody>
@@ -354,7 +368,6 @@ const renderUnidadesDetails = () => {
               <td className="detail-cell">Unidade</td>
               <td className="detail-cell">{renderCell('unidade', index)}</td>
             </tr>
-          
           </React.Fragment>
         ))}
       </tbody>
@@ -363,25 +376,45 @@ const renderUnidadesDetails = () => {
 };
 
 
-const renderUsuariosDetails = () => {
 
+const renderUsuariosDetails = () => {
   const dataSource = isEditing ? editData.usuarios : detalhesInstituicao?.usuarios;
 
   if (!dataSource) return null;
 
-  const usuarios = isEditing ? editData.usuarios : detalhesInstituicao.usuarios;
-  if (!usuarios) return null;
+  const renderCell = (field, index) => {
+    return isEditing ? (
+      <input
+        type="text"
+        value={editData.usuarios[index][field] || ''}
+        onChange={(e) => handleInputChange(e, index, 'usuarios', field)}
+      />
+    ) : (
+      dataSource[index][field] || ''
+    );
+  };
 
   return (
     <Table responsive bordered className="usuarios-details-table mb-4">
       <tbody>
         {dataSource.map((usuario, index) => (
           <React.Fragment key={index}>
-            {renderCell('Nome', 'nome', usuario, index, 'usuarios')}
-            {renderCell('Identificador', 'identificador', usuario, index, 'usuarios')}
-            {renderCell('Senha', 'senha', usuario, index, 'usuarios')}
-            {renderCell('Acesso', 'acesso', usuario, index, 'usuarios')}
-            
+            <tr>
+              <td className="detail-cell">Nome</td>
+              <td className="detail-cell">{renderCell('nome', index)}</td>
+            </tr>
+            <tr>
+              <td className="detail-cell">Identificador</td>
+              <td className="detail-cell">{renderCell('identificador', index)}</td>
+            </tr>
+            <tr>
+              <td className="detail-cell">Senha</td>
+              <td className="detail-cell">{renderCell('senha', index)}</td>
+            </tr>
+            <tr>
+              <td className="detail-cell">Acesso</td>
+              <td className="detail-cell">{renderCell('acesso', index)}</td>
+            </tr>
           </React.Fragment>
         ))}
       </tbody>
@@ -389,7 +422,6 @@ const renderUsuariosDetails = () => {
   );
 };
 
-  
   // Pagination logic
   const totalPages = Math.ceil(instituicoes.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;

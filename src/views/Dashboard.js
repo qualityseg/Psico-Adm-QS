@@ -5,6 +5,22 @@ import './styles.dashboard.scss';
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
+  const [evaluationsCount, setEvaluationsCount] = useState(0);
+  const [evaluationsTodayCount, setEvaluationsTodayCount] = useState(0);
+
+  useEffect(() => {
+    const instituicaoNome = localStorage.getItem('instituicaoNome');
+
+    // Chamada de API para obter a contagem das avaliações
+    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/api/evaluations/count?instituicaoNome=${instituicaoNome}`)
+      .then(response => {
+        setEvaluationsCount(response.data.total);
+        setEvaluationsTodayCount(response.data.today);
+      })
+      .catch(error => {
+        console.error("Erro ao recuperar contagens de avaliações:", error);
+      });
+  }, []);
 
   useEffect(() => {
     // Recuperar o nome da instituição do localStorage
@@ -39,6 +55,7 @@ const Dashboard = () => {
             <BootstrapCard.Body>
               <BootstrapCard.Title>Avaliações Realizadas</BootstrapCard.Title>
               <BootstrapCard.Text>Até o momento</BootstrapCard.Text>
+              <BootstrapCard.Text className="display-4">{evaluationsCount}</BootstrapCard.Text> 
             </BootstrapCard.Body>
           </BootstrapCard>
         </Col>
@@ -47,6 +64,7 @@ const Dashboard = () => {
             <BootstrapCard.Body>
               <BootstrapCard.Title>Avaliações Realizadas Hoje</BootstrapCard.Title>
               <BootstrapCard.Text>Total</BootstrapCard.Text>
+              <BootstrapCard.Text className="display-4">{evaluationsTodayCount}</BootstrapCard.Text> 
             </BootstrapCard.Body>
           </BootstrapCard>
         </Col>

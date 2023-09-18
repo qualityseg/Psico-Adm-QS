@@ -23,4 +23,8 @@
   .programa-card .card-body {
     font-size: 16px; /* Tamanho do corpo do texto */
   }
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
   

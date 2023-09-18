@@ -34,10 +34,8 @@ const NRs = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    let updatedValue = value;
+  
     if (name === 'CEP') {
       const cep = value.replace(/\D/g, '');
       if (cep.length === 8) {
@@ -46,6 +44,7 @@ const NRs = () => {
             const { logradouro, bairro, localidade, uf } = response.data;
             setFormData(prevState => ({
               ...prevState,
+              [name]: updatedValue,
               Endereco: logradouro,
               Bairro: bairro,
               Cidade: localidade,
@@ -55,9 +54,27 @@ const NRs = () => {
           .catch(error => {
             console.log(error);
           });
+        return; // Skip the setFormData at the end
       }
     }
+  
+    if (name === 'CPF') {
+      const cpf = value.replace(/\D/g, ''); // Remove qualquer caracter não numérico
+      if (cpf.length >= 3 && cpf.length <= 5) {
+        updatedValue = cpf.replace(/(\d{3})(\d{0,2})/, "$1.$2");
+      } else if (cpf.length > 5 && cpf.length <= 8) {
+        updatedValue = cpf.replace(/(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3");
+      } else if (cpf.length > 8) {
+        updatedValue = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
+      }
+    }
+  
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: updatedValue,
+    }));
   };
+  
 
   const handleCheckChange = (e) => {
     const { name, checked } = e.target;
