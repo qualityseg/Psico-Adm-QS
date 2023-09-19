@@ -20,7 +20,7 @@ const NR2 = () => {
   const currentItems = usuarios.slice(indexOfFirstItem, indexOfLastItem);
 
 const columns = [
-    'Nome', 'Sobrenome', 'Email', 'Data_de_Nascimento', 'Genero', 'Telefone', 'Telefone2', 'CPF', 'CNPJ',
+    'NomeCompleto', 'Email', 'Data_de_Nascimento', 'Genero', 'Telefone', 'Telefone2', 'CPF', 'CNPJ',
     'Matricula', 'Observacoes', 'Endereco', 'Numero', 'Complemento', 'Bairro', 'Cidade', 'Estado',
     'Pais', 'CEP', 'Unidade', 'Setor', 'Cargo', 'Instituicao', 'senha', 'Acesso'
   ];
@@ -36,7 +36,7 @@ const columns = [
     const instituicaoNome = localStorage.getItem('instituicaoNome');
 
     // Make API request with the institution name as a parameter
-    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`)
     .then(response => {
         if (response.data && Array.isArray(response.data)) {
             setUsuarios(response.data);
@@ -75,7 +75,7 @@ const handleSave = () => {
   // ... (seu código para salvar o usuário)
   
   
-    axios.put(`https://fair-ruby-caterpillar-wig.cyclic.app/cadastro_clientes/${editData.id}`, editData)
+    axios.put(`https://ill-lime-gosling-wrap.cyclic.app/cadastro_clientes/${editData.id}`, editData)
       .then(response => {
         console.log(response.data);
         setEditIndex(-1);
@@ -88,7 +88,7 @@ const handleSave = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/usuarios/${id}`)
+    axios.delete(`https://ill-lime-gosling-wrap.cyclic.app/usuarios/${id}`)
       .then(response => {
         console.log(response.data);
         carregarUsuarios();
@@ -130,7 +130,7 @@ const handleSave = () => {
         <tbody>
           {currentItems.map((usuario, index) => (
             <tr key={index} onClick={() => handleUserSelection(indexOfFirstItem + index)} className="clickable-row">
-              <td>{usuario.Nome}</td>
+              <td>{usuario.NomeCompleto}</td>
             </tr>
           ))}
         </tbody>

@@ -6,8 +6,7 @@ import './NovosUsuarios.scss';
 const NRs = () => {
   
   const [formData, setFormData] = useState({
-    Nome: '',
-    Sobrenome: '',
+    NomeCompleto: '',
     Email: '',
     Data_de_Nascimento: '',
     Genero: '',
@@ -130,7 +129,7 @@ const NRs = () => {
 
 
     // Envia os dados para o servidor
-    axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/register', formData)
+    axios.post('https://ill-lime-gosling-wrap.cyclic.app/register', formData)
       .then(response => {
         if (response.data.success) {
           // Mostra a notificação de sucesso se o usuário for criado com êxito
@@ -167,12 +166,8 @@ const NRs = () => {
           <Card.Header>IDENTIFICAÇÃO</Card.Header>
           <Card.Body>
             <Form.Group as={Row}>
-              <Form.Label column md={2}>Nome*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="Nome" onChange={handleChange} required/></Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column md={2}>Sobrenome*:</Form.Label>
-              <Col md={10}><Form.Control type="text" name="Sobrenome" onChange={handleChange} required/></Col>
+              <Form.Label column md={2}>Nome Completo*:</Form.Label>
+              <Col md={10}><Form.Control type="text" name="NomeCompleto" onChange={handleChange} required/></Col>
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column md={2}>E-mail de acesso*:</Form.Label>

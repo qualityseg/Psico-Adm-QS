@@ -43,6 +43,7 @@
     "react-tooltip": "^5.18.1",
     "reactstrap": "8.8.1",
     "sass": "1.53.0",
+    "socket.io-client": "^4.7.2",
     "validator": "^13.9.0"
   },
   "optionalDependencies": {

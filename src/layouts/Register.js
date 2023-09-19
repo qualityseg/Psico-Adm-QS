@@ -36,7 +36,7 @@ function Register() {
     const user = {usuario, nome, email, senha, unidade, setor, acesso};
   
     try {
-      const response = await axios.post(`https://fair-ruby-caterpillar-wig.cyclic.app/register_usuario`, user);
+      const response = await axios.post(`https://ill-lime-gosling-wrap.cyclic.app/register_usuario`, user);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ function Register() {
 
   const handleDeleteUsers = async () => {
     try {
-      const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/deleteAllUsers`);
+      const response = await axios.delete(`https://ill-lime-gosling-wrap.cyclic.app/deleteAllUsers`);
       alert(response.data.message);
     } catch (error) {
       console.error(error);

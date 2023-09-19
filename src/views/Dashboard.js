@@ -12,7 +12,7 @@ const Dashboard = () => {
     const instituicaoNome = localStorage.getItem('instituicaoNome');
 
     // Chamada de API para obter a contagem das avaliações
-    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/api/evaluations/count?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/api/evaluations/count?instituicaoNome=${instituicaoNome}`)
       .then(response => {
         setEvaluationsCount(response.data.total);
         setEvaluationsTodayCount(response.data.today);
@@ -27,7 +27,7 @@ const Dashboard = () => {
     const institutionName = localStorage.getItem('instituicaoNome');
     
     // Fazer uma chamada de API para obter a contagem de usuários por instituição
-    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/api/UserCountByInstitution?instituicaoNome=${institutionName}`)
+    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/api/UserCountByInstitution?instituicaoNome=${institutionName}`)
       .then(response => {
         // Atualizar o estado com a contagem de usuários
         setUserCount(response.data.count);

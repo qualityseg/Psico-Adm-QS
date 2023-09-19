@@ -19,7 +19,7 @@ const TodosProgramas = () => {
 
   const handleSave = async () => {
     try {
-      const url = `https://fair-ruby-caterpillar-wig.cyclic.app/programas/${selectedProgram.id}`;
+      const url = `https://ill-lime-gosling-wrap.cyclic.app/programas/${selectedProgram.id}`;
       const updatedData = {
         nome_programa: selectedProgram.nome_programa,
         link_form: selectedProgram.link_form,
@@ -38,7 +38,7 @@ const TodosProgramas = () => {
   
   const handleDelete = async () => {
     try {
-      const url = `https://fair-ruby-caterpillar-wig.cyclic.app/programas/${selectedProgram.id}`;
+      const url = `https://ill-lime-gosling-wrap.cyclic.app/programas/${selectedProgram.id}`;
       const response = await axios.delete(url);
   
       if (response.data.success) {
@@ -51,7 +51,7 @@ const TodosProgramas = () => {
   
   useEffect(() => {
     const instituicaoNome = localStorage.getItem('instituicaoNome');
-    axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
       .then(response => {
         setProgramas(response.data);
       })
@@ -70,10 +70,10 @@ const TodosProgramas = () => {
       instituicaoNome: instituicaoNome
     };
 
-    axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/programas', programDetails)
+    axios.post('https://ill-lime-gosling-wrap.cyclic.app/programas', programDetails)
       .then(response => {
         setNotification({ type: 'success', message: 'Programa criado com sucesso!' });
-        return axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app/programas?instituicaoNome=${instituicaoNome}`);
+        return axios.get(`https://ill-lime-gosling-wrap.cyclic.app/programas?instituicaoNome=${instituicaoNome}`);
       })
       .then(response => {
         setProgramas(response.data);

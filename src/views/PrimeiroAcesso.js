@@ -9,7 +9,7 @@ const PrimeiroAcesso = () => {
   document.body.style.backgroundSize = 'cover';
   document.body.style.height = '100vh';
 
-  const [Nome, setName] = useState('');
+
   const [Email, setEmail] = useState('');
   const [Senha, setSenha] = useState('');
   const [verified, setVerified] = useState(false);
@@ -18,7 +18,7 @@ const PrimeiroAcesso = () => {
   const verifyUser = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/verifyUser', { Nome, Email });
+      const response = await axios.post('https://ill-lime-gosling-wrap.cyclic.app/api/verifyUser', { Email });
       console.log("Resposta da API: ", response.data);  // Log para diagnóstico
   
       if (response.data.success) {
@@ -26,7 +26,7 @@ const PrimeiroAcesso = () => {
         setVerified(true);
       } else {
         console.log("Falha na verificação do usuário.");  // Log para diagnóstico
-        setError('Nome ou identificador incorretos');
+        setError('identificador incorreto.');
       }
     } catch (error) {
       console.log("Erro ao fazer a chamada da API: ", error);  // Log para diagnóstico
@@ -37,7 +37,7 @@ const PrimeiroAcesso = () => {
 
   const registerPassword = async () => {
     try {
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/api/registerPassword', { Nome, Email, Senha });
+      const response = await axios.post('https://ill-lime-gosling-wrap.cyclic.app/api/registerPassword', { Email, Senha });
       if (response.data.success) {
         window.location.href = '/UserLogin';
       } else {
@@ -65,10 +65,7 @@ const PrimeiroAcesso = () => {
             <Form>
               {!verified ? (
                 <>
-                  <Form.Group>
-                    <Form.Label className="label-text">Nome</Form.Label>
-                    <Form.Control type="text" value={Nome} onChange={(e) => setName(e.target.value)} />
-                  </Form.Group>
+                
                   <Form.Group>
                     <Form.Label className="label-text">Email</Form.Label>
                     <Form.Control type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />

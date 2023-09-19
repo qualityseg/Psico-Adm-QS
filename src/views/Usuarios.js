@@ -21,7 +21,7 @@ const NR3 = () => {
   const carregarUsuarios = async () => {
     try {
       const instituicaoNome = localStorage.getItem('instituicaoNome'); // Substitua pela chave correta se necessário
-      const url = `https://fair-ruby-caterpillar-wig.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`;
+      const url = `https://ill-lime-gosling-wrap.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`;
       
       const response = await axios.get(url);
       setUsuarios(response.data || []); // garanta que é um array
@@ -32,11 +32,11 @@ const NR3 = () => {
 
   // Funções de manipulação de eventos
   const handleEdit = (id) => {
-    history.push(`${process.env.REACT_APP_API_URL}/edit/${id}`);
+    history.push(`/admin/GerenciarUsuario`);
   };
 
   const handleRedirect = () => {
-    history.push('${process.env.REACT_APP_API_URL}/admin/NR2');
+    history.push('/admin/GerenciarUsuario');
   };
 
   const handleSearch = (e) => {
@@ -45,7 +45,7 @@ const NR3 = () => {
 
   // Filtragem de usuários
   const filteredUsuarios = (usuarios || []).filter(usuario => 
-    usuario.Nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    usuario.NomeCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
     usuario.Email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -88,7 +88,7 @@ const NR3 = () => {
               <tbody>
                 {filteredUsuarios.map(usuario => (
                   <tr key={usuario.id}>
-                    <td>{usuario.Nome}</td>
+                    <td>{usuario.NomeCompleto}</td>
                     <td>{usuario.Email}</td>
                     <td>
                       {usuario.Acesso && usuario.Acesso.includes('Paciente') && (

@@ -346,7 +346,7 @@ const NRs = () => {
     };
   
     try {
-      const response = await axios.post('https://fair-ruby-caterpillar-wig.cyclic.app/nova-instituicao', data);
+      const response = await axios.post('https://ill-lime-gosling-wrap.cyclic.app/nova-instituicao', data);
   
       if (response.data.success) {
         alert('Instituição criada com sucesso!');

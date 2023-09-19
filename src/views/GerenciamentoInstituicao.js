@@ -58,50 +58,55 @@ const GerenciamentoInstituicoes = () => {
     setIsEditing(true);
   };
   
-  
-  const handleSave = async () => {
-    try {
-      // Prepare dataToSave based on the current state or editData
-      const dataToSave = {
-        instituicoes: [{ ...editData.instituicoes[0], id: selectedInstituicaoId }],
-        cargos: editData.cargos,
-        contatos: editData.contatos,
-        setores: editData.setores,
-        unidades: editData.unidades,
-        usuarios: editData.usuarios,
-      };
-      
-      console.log('Data to send:', dataToSave);
-      const response = await axios.post(
-        'https://fair-ruby-caterpillar-wig.cyclic.app/salvar-instituicao',
-        dataToSave,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-  
-      if (response.status === 200 && response.data.success) {
-        // Update the state as needed
-        // E.g., setInstituicoes(updatedInstituicoes);
-        // Exit edit mode
-        setIsEditing(false);
-        // Show success message
-        setNotification({ type: 'success', message: 'Alterações salvas com sucesso!' });
-      } else {
-        // Handle failure
-        setNotification({ type: 'danger', message: 'Erro ao salvar as alterações.' });
-      }
-    } catch (error) {
-      console.error('Erro ao salvar as alterações:', error);
-      setNotification({ type: 'danger', message: 'Erro ao salvar as alterações.' });
+  // Função para validar os dados antes de salvar
+  const validateData = (data) => {
+    if (!data.instituicoes || data.instituicoes.length === 0) {
+      return { isValid: false, message: 'Instituições estão vazias' };
     }
+    // Adicione mais regras de validação conforme necessário
+    return { isValid: true };
   };
-  
-  
-  
-  
+
+  // Função para lidar com o botão "Salvar"
+  const handleSave = async () => {
+    const dataToSave = {
+        instituicoes: instituicoes,
+        cargos: cargos,
+        contatos: contatos,
+        setores: setores,
+        unidades: unidades,
+        usuarios: usuarios,
+    };
+
+    // Log de dados que serão enviados
+    console.log("Data to be sent:", dataToSave);
+
+    try {
+        const response = await axios.post(
+            'https://ill-lime-gosling-wrap.cyclic.app/instituicoes',
+            dataToSave
+        );
+
+        // Log de resposta bem-sucedida
+        if (response.status === 200 && response.data.success) {
+            console.log("Data successfully saved. Response:", response.data);
+
+            // Aqui você pode adicionar código para atualizar o estado, se necessário
+        } else {
+            // Log de resposta mal-sucedida
+            console.log("Failed to save data. Response:", response.data);
+        }
+    } catch (error) {
+        console.error("API Error:", error);
+    }
+};
+
+    
+    
   
   const handleDeleteInstituicao = async (id) => {
     try {
-      const response = await axios.delete(`https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes/${id}`);
+      const response = await axios.delete(`https://ill-lime-gosling-wrap.cyclic.app/instituicoes/${id}`);
       if (response.status === 200) {
         // Remover a instituição excluída da lista usando o ID
         const updatedInstituicoes = instituicoes.filter(instituicao => instituicao.id !== id);
@@ -131,7 +136,7 @@ const GerenciamentoInstituicoes = () => {
   }, []);
 
   const carregarInstituicoes = () => {
-    axios.get('https://fair-ruby-caterpillar-wig.cyclic.app/instituicoes')
+    axios.get('https://ill-lime-gosling-wrap.cyclic.app/instituicoes')
       .then(response => {
         setInstituicoes(response.data);
       })
@@ -142,7 +147,7 @@ const GerenciamentoInstituicoes = () => {
 
   const carregarDetalhesInstituicao = (instituicaoId) => {
     const fetchDetails = async (endpoint) => {
-      const response = await axios.get(`https://fair-ruby-caterpillar-wig.cyclic.app${endpoint}?instituicaoId=${instituicaoId}`);
+      const response = await axios.get(`https://ill-lime-gosling-wrap.cyclic.app${endpoint}?instituicaoId=${instituicaoId}`);
       return response.data;
     };
   

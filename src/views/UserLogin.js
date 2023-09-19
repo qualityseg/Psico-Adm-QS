@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
   
     axios
-      .post("https://fair-ruby-caterpillar-wig.cyclic.app/api/user/login", {
+      .post("https://ill-lime-gosling-wrap.cyclic.app/api/user/login", {
         Email: email,
         senha: senha,
       })
