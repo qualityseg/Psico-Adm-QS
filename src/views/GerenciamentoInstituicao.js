@@ -67,46 +67,48 @@ const GerenciamentoInstituicoes = () => {
     return { isValid: true };
   };
 
-  // Função para lidar com o botão "Salvar"
+ // Função para lidar com o botão "Salvar"
   const handleSave = async () => {
-    const dataToSave = {
-        instituicoes: instituicoes,
-        cargos: cargos,
-        contatos: contatos,
-        setores: setores,
-        unidades: unidades,
-        usuarios: usuarios,
-    };
+    if (!editData) {
+      console.error("Nenhum dado para salvar.");
+      return;
+    }
 
+    const dataToSave = {
+      instituicoes: editData.instituicoes,
+      cargos: editData.cargos,
+      contatos: editData.contatos,
+      setores: editData.setores,
+      unidades: editData.unidades,
+      usuarios: editData.usuarios,
+    };
     // Log de dados que serão enviados
     console.log("Data to be sent:", dataToSave);
 
     try {
-        const response = await axios.post(
-            'https://ill-lime-gosling-wrap.cyclic.app/instituicoes',
-            dataToSave
-        );
+      const response = await axios.put(
+        `https://sparkling-capris-bass.cyclic.app/instituicoes/${selectedInstituicao.instituicaoNome}`, // Usando o nome da instituição como identificador
+        dataToSave
+      );
 
-        // Log de resposta bem-sucedida
-        if (response.status === 200 && response.data.success) {
-            console.log("Data successfully saved. Response:", response.data);
+      // Log de resposta bem-sucedida
+      if (response.status === 200) {
+        console.log("Data successfully saved. Response:", response.data);
 
-            // Aqui você pode adicionar código para atualizar o estado, se necessário
-        } else {
-            // Log de resposta mal-sucedida
-            console.log("Failed to save data. Response:", response.data);
-        }
+        // Aqui você pode adicionar código para atualizar o estado, se necessário
+      } else {
+        // Log de resposta mal-sucedida
+        console.log("Failed to save data. Response:", response.data);
+      }
     } catch (error) {
-        console.error("API Error:", error);
+      console.error("API Error:", error);
     }
-};
+  };
 
-    
-    
-  
+
   const handleDeleteInstituicao = async (id) => {
     try {
-      const response = await axios.delete(`https://ill-lime-gosling-wrap.cyclic.app/instituicoes/${id}`);
+      const response = await axios.delete(`https://sparkling-capris-bass.cyclic.app/instituicoes/${id}`);
       if (response.status === 200) {
         // Remover a instituição excluída da lista usando o ID
         const updatedInstituicoes = instituicoes.filter(instituicao => instituicao.id !== id);
@@ -136,7 +138,7 @@ const GerenciamentoInstituicoes = () => {
   }, []);
 
   const carregarInstituicoes = () => {
-    axios.get('https://ill-lime-gosling-wrap.cyclic.app/instituicoes')
+    axios.get('https://sparkling-capris-bass.cyclic.app/instituicoes')
       .then(response => {
         setInstituicoes(response.data);
       })
@@ -147,7 +149,7 @@ const GerenciamentoInstituicoes = () => {
 
   const carregarDetalhesInstituicao = (instituicaoId) => {
     const fetchDetails = async (endpoint) => {
-      const response = await axios.get(`https://ill-lime-gosling-wrap.cyclic.app${endpoint}?instituicaoId=${instituicaoId}`);
+      const response = await axios.get(`https://sparkling-capris-bass.cyclic.app${endpoint}?instituicaoId=${instituicaoId}`);
       return response.data;
     };
   

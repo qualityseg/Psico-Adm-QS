@@ -18,7 +18,7 @@ const PainelUsuario = () => {
   };
 
   useEffect(() => {
-    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://sparkling-capris-bass.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
       .then((response) => {
         setProgramas(response.data);
       });
@@ -28,7 +28,7 @@ const PainelUsuario = () => {
     const cpf = localStorage.getItem('cpf');
     const instituicaoNome = localStorage.getItem('instituicaoNome');
     
-    axios.get(`https://ill-lime-gosling-wrap.cyclic.app/checkAvaliacao?cpf=${cpf}&instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://sparkling-capris-bass.cyclic.app/checkAvaliacao?cpf=${cpf}&instituicaoNome=${instituicaoNome}`)
       .then(response => {
         if (response.data.avaliacaoRealizada) {
           atualizarAvaliacao(cpf);

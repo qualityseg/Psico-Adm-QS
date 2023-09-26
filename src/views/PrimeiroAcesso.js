@@ -18,7 +18,7 @@ const PrimeiroAcesso = () => {
   const verifyUser = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://ill-lime-gosling-wrap.cyclic.app/api/verifyUser', { Email });
+      const response = await axios.post('https://sparkling-capris-bass.cyclic.app/api/verifyUser', { Email });
       console.log("Resposta da API: ", response.data);  // Log para diagnóstico
   
       if (response.data.success) {
@@ -37,7 +37,7 @@ const PrimeiroAcesso = () => {
 
   const registerPassword = async () => {
     try {
-      const response = await axios.post('https://ill-lime-gosling-wrap.cyclic.app/api/registerPassword', { Email, Senha });
+      const response = await axios.post('https://sparkling-capris-bass.cyclic.app/api/registerPassword', { Email, Senha });
       if (response.data.success) {
         window.location.href = '/UserLogin';
       } else {

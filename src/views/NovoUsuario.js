@@ -129,7 +129,7 @@ const NRs = () => {
 
 
     // Envia os dados para o servidor
-    axios.post('https://ill-lime-gosling-wrap.cyclic.app/register', formData)
+    axios.post('https://sparkling-capris-bass.cyclic.app/register', formData)
       .then(response => {
         if (response.data.success) {
           // Mostra a notificação de sucesso se o usuário for criado com êxito
