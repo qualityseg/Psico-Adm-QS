@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
   
     axios
-      .post("https://sparkling-capris-bass.cyclic.app/api/user/login", {
+      .post("https://smoggy-pike-jumper.cyclic.app/api/user/login", {
         Email: email,
         senha: senha,
       })

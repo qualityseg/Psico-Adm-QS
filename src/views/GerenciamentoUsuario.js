@@ -36,7 +36,7 @@ const columns = [
     const instituicaoNome = localStorage.getItem('instituicaoNome');
 
     // Make API request with the institution name as a parameter
-    axios.get(`https://sparkling-capris-bass.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://smoggy-pike-jumper.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`)
     .then(response => {
         if (response.data && Array.isArray(response.data)) {
             setUsuarios(response.data);
@@ -75,7 +75,7 @@ const handleSave = () => {
   // ... (seu código para salvar o usuário)
   
   
-    axios.put(`https://sparkling-capris-bass.cyclic.app/cadastro_clientes/${editData.id}`, editData)
+    axios.put(`https://smoggy-pike-jumper.cyclic.app/cadastro_clientes/${editData.id}`, editData)
       .then(response => {
         console.log(response.data);
         setEditIndex(-1);
@@ -88,7 +88,7 @@ const handleSave = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`https://sparkling-capris-bass.cyclic.app/usuarios/${id}`)
+    axios.delete(`https://smoggy-pike-jumper.cyclic.app/usuarios/${id}`)
       .then(response => {
         console.log(response.data);
         carregarUsuarios();

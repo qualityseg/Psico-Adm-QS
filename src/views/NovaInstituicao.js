@@ -328,7 +328,7 @@ const NovaInstituicao = () => {
   
     // Envio da solicitação POST para o servidor
   try {
-    const response = await fetch('https://sparkling-capris-bass.cyclic.app/instituicoes', {
+    const response = await fetch('https://smoggy-pike-jumper.cyclic.app/instituicoes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataToSend),

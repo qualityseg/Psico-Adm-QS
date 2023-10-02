@@ -21,7 +21,7 @@ const NR3 = () => {
   const carregarUsuarios = async () => {
     try {
       const instituicaoNome = localStorage.getItem('instituicaoNome'); // Substitua pela chave correta se necessário
-      const url = `https://sparkling-capris-bass.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`;
+      const url = `https://smoggy-pike-jumper.cyclic.app/usuarios?instituicaoNome=${instituicaoNome}`;
       
       const response = await axios.get(url);
       setUsuarios(response.data || []); // garanta que é um array
