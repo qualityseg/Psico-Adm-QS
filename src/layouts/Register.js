@@ -36,7 +36,7 @@ function Register() {
     const user = {usuario, nome, email, senha, unidade, setor, acesso};
   
     try {
-      const response = await axios.post(`https://smoggy-pike-jumper.cyclic.app/register_usuario`, user);
+      const response = await axios.post(`https://weak-lamb-shift.cyclic.app/register_usuario`, user);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ function Register() {
 
   const handleDeleteUsers = async () => {
     try {
-      const response = await axios.delete(`https://smoggy-pike-jumper.cyclic.app/deleteAllUsers`);
+      const response = await axios.delete(`https://weak-lamb-shift.cyclic.app/deleteAllUsers`);
       alert(response.data.message);
     } catch (error) {
       console.error(error);

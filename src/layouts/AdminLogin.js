@@ -23,7 +23,7 @@ const Login = (props) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post('https://smoggy-pike-jumper.cyclic.app/login', { identificador, senha }) // Mudança aqui
+    axios.post('https://weak-lamb-shift.cyclic.app/login', { identificador, senha }) // Mudança aqui
       .then(response => {
         console.log('Response from server:', response.data); // Log the response from the server
 

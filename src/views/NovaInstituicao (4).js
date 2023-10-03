@@ -346,7 +346,7 @@ const NRs = () => {
     };
   
     try {
-      const response = await axios.post('https://smoggy-pike-jumper.cyclic.appnova-instituicao', data);
+      const response = await axios.post('https://weak-lamb-shift.cyclic.app/nova-instituicao', data);
   
       if (response.data.success) {
         alert('Instituição criada com sucesso!');

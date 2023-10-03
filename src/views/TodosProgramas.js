@@ -19,7 +19,7 @@ const TodosProgramas = () => {
 
   const handleSave = async () => {
     try {
-      const url = `https://smoggy-pike-jumper.cyclic.app/programas/${selectedProgram.id}`;
+      const url = `https://weak-lamb-shift.cyclic.app/programas/${selectedProgram.id}`;
       const updatedData = {
         nome_programa: selectedProgram.nome_programa,
         link_form: selectedProgram.link_form,
@@ -38,7 +38,7 @@ const TodosProgramas = () => {
   
   const handleDelete = async () => {
     try {
-      const url = `https://smoggy-pike-jumper.cyclic.app/programas/${selectedProgram.id}`;
+      const url = `https://weak-lamb-shift.cyclic.app/programas/${selectedProgram.id}`;
       const response = await axios.delete(url);
   
       if (response.data.success) {
@@ -51,7 +51,7 @@ const TodosProgramas = () => {
   
   useEffect(() => {
     const instituicaoNome = localStorage.getItem('instituicaoNome');
-    axios.get(`https://smoggy-pike-jumper.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
+    axios.get(`https://weak-lamb-shift.cyclic.app/programas?instituicaoNome=${instituicaoNome}`)
       .then(response => {
         setProgramas(response.data);
       })
@@ -70,10 +70,10 @@ const TodosProgramas = () => {
       instituicaoNome: instituicaoNome
     };
 
-    axios.post('https://smoggy-pike-jumper.cyclic.app/programas', programDetails)
+    axios.post('https://weak-lamb-shift.cyclic.app/programas', programDetails)
       .then(response => {
         setNotification({ type: 'success', message: 'Programa criado com sucesso!' });
-        return axios.get(`https://smoggy-pike-jumper.cyclic.app/programas?instituicaoNome=${instituicaoNome}`);
+        return axios.get(`https://weak-lamb-shift.cyclic.app/programas?instituicaoNome=${instituicaoNome}`);
       })
       .then(response => {
         setProgramas(response.data);
