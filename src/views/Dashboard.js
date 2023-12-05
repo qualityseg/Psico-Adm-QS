@@ -70,11 +70,11 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      <iframe
+             <iframe
                 title="Graficos"
                 width="1000"
                 height="635"
-                align = "center"
+               
                 src="https://app.powerbi.com/view?r=eyJrIjoiNGRjOWQ3OTItODM3Ni00YzEwLWIwMmEtZmM1NDA3NmVmZmYwIiwidCI6ImMxNTk2NDVkLTM3ZjUtNDg5Ny1hNTQ5LTNhZDIzMDkyZTdjNyJ9"
                 frameBorder="0"
                 allowFullScreen
