@@ -161,6 +161,7 @@ const NRs = () => {
   return (
     <Container>
       <h2 style={{ fontSize: "27px", fontWeight: "bold", marginBottom: "20px" }}>Cadastro de Novos Usuários</h2>
+      <P> </P>
       <Form onSubmit={handleSubmit}> 
         <Card>
           <Card.Header>IDENTIFICAÇÃO</Card.Header>
