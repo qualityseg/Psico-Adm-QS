@@ -69,7 +69,8 @@ const Dashboard = () => {
           </BootstrapCard>
         </Col>
       </Row>
-
+      
+        <P> </P>
              <iframe
                 title="Graficos"
                 width="1000"
